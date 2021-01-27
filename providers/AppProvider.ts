@@ -1,4 +1,4 @@
-import { ApplicationContract } from '@ioc:Adonis/Core/Application'
+import { ApplicationContract} from '@ioc:Adonis/Core/Application'
 
 import ArmaServer from 'App/Services/Arma/Server'
 import ArmaProfile from 'App/Services/Arma/Profile'
@@ -21,7 +21,16 @@ export default class AppProvider {
   }
 
   public async ready () {
-    // App is ready
+    // App is ready    
+    const App = await import('@ioc:Adonis/Core/Application')
+
+    /**
+     * Only import socket file, when environment is `web`. In other
+     * words do not import during ace commands.
+     */
+    if (App.default.environment === 'web') {
+      await import('../start/socket')
+    }
   }
 
   public async shutdown () {
