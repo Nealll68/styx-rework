@@ -1,0 +1,69 @@
+// server.cfg
+//
+// comments are written with "//" in front of them.
+
+
+// GLOBAL SETTINGS
+hostname = "Arma 3 server";
+password = "";
+passwordAdmin = "xyz";
+serverCommandPassword = "xyzxyz";
+
+logFile = "server_console.log";
+
+// WELCOME MESSAGE ("message of the day")
+// It can be several lines, separated by comma
+// Empty messages "" will not be displayed at all but are only for increasing the interval
+motd[] = {
+};
+motdInterval = 5;
+
+
+// JOINING RULES
+maxPlayers = 64;
+kickDuplicate = 1;
+verifySignatures = 2;
+allowedFilePatching = 0;
+filePatchingExceptions[] = {};
+
+// VOTING
+voteMissionPlayers = 1;
+voteThreshold = 0.33;
+
+
+// INGAME SETTINGS
+disableVoN = 0;
+vonCodec = 1;
+vonCodecQuality = 30;
+persistent = 1;
+timeStampFormat = "short";
+BattlEye = 1;
+allowedLoadFileExtensions[] = {"hpp","sqs","sqf","fsm","cpp","paa","txt","xml","inc","ext","sqm","ods","fxy","lip","csv","kb","bik","bikb","html","htm","biedi"};
+allowedPreprocessFileExtensions[] = {"hpp","sqs","sqf","fsm","cpp","paa","txt","xml","inc","ext","sqm","ods","fxy","lip","csv","kb","bik","bikb","html","htm","biedi"};
+allowedHTMLLoadExtensions[] = {"htm","html","xml","txt"};
+//allowedHTMLLoadURIs[] = {};
+
+// TIMEOUTS
+disconnectTimeout = 5;
+maxDesync = 150;
+maxPing= 200;
+maxPacketLoss= 50;
+
+// SCRIPTING ISSUES
+onUserConnected = "";
+onUserDisconnected = "";
+doubleIdDetected = "";
+
+// SIGNATURE VERIFICATION
+onUnsignedData = "kick (_this select 0)";
+onHackedData = "kick (_this select 0)";
+onDifferentData = "";
+
+
+// MISSIONS CYCLE (see below)
+randomMissionOrder = true;
+autoSelectMission = true;
+
+class Missions {};
+
+missionWhitelist[] = {};
