@@ -10,6 +10,10 @@ const { SteamCmd } = require('steamcmd-interface')
 
 export default class SteamConsole implements SteamConsoleInterface {
 
+  /**
+   * Update Arma 3 server
+   * @param steamAccount Steam account if not registered in config
+   */
   public async updateArma (steamAccount?: SteamAccountInterface): Promise<void> {
     const steamCmd = await this.init(steamAccount)
 
@@ -23,6 +27,16 @@ export default class SteamConsole implements SteamConsoleInterface {
     }
   }
 
+  /**
+   * This method init the SteamCmd interface and login steam account
+   * 
+   * ? It will check if an account is registered in config and if not, it will throw
+   * ? exception to ask for an account if not present in method parameter
+   * 
+   * ? If the account need steam guard it will ask for steam guard code too
+   * 
+   * @param steamAccount Steam account if not registered in config
+   */
   private async init (steamAccount?: SteamAccountInterface) {
     const steamConfig: SteamConfigInterface = Config.get('steam')
     
