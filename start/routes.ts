@@ -19,7 +19,6 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
-import SteamConsole from '@ioc:Styx/Steam/Console'
 
 Route
   .resource('/profile', 'ProfilesController')
