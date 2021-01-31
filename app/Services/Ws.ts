@@ -9,10 +9,7 @@ class Ws implements WsInterface {
 
   public start (callback: (socket: Socket) => void): void {
     this.io = new Server(AdonisServer.instance!, {
-      cors: {
-        origin: '*',
-        methods: ["GET", "POST"]
-      }
+      cors: corsConfig
     })
 
     this.io.on('connection', callback)
