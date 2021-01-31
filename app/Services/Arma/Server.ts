@@ -1,5 +1,3 @@
-import ArmaServerInterface from 'contracts/arma/server'
-
 import { ChildProcess, spawn } from 'child_process'
 import { join } from 'path'
 
@@ -12,7 +10,7 @@ import Parameter from 'App/Models/Parameter'
 
 import ServerExecutableMissingException from 'App/Exceptions/ServerExecutableMissingException'
 
-class ArmaServer implements ArmaServerInterface {
+class ArmaServer {
 
   private _server: ChildProcess
   private _profileBasePath = process.platform === 'win32'

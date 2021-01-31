@@ -1,4 +1,4 @@
-import ArmaConfigInterface from 'contracts/arma/config'
+import ArmaConfigInterface from 'Contracts/arma'
 
 const ArmaConfig: ArmaConfigInterface = {
   /**

@@ -19,6 +19,11 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import SteamConsole from 'App/Services/Steam/Console'
+
+Route.get('/steam/cancel', async () => {
+  SteamConsole.cancel()
+})
 
 Route
   .resource('/profile', 'ProfilesController')

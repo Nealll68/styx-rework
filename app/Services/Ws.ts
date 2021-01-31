@@ -1,9 +1,8 @@
-import WsInterface from 'contracts/ws'
 import { Server, Socket } from 'socket.io'
 import AdonisServer from '@ioc:Adonis/Core/Server'
 import corsConfig from 'Config/cors'
 
-class Ws implements WsInterface {
+class Ws {
   public isReady = false
   public io: Server
 

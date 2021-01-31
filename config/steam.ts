@@ -1,4 +1,4 @@
-import { SteamConfigInterface } from 'contracts/steam/config'
+import { SteamConfigInterface } from 'Contracts/steam'
 
 const steamConfig: SteamConfigInterface = {
 

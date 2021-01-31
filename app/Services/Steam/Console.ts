@@ -1,5 +1,4 @@
-import SteamConsoleInterface from 'contracts/steam/console'
-import { SteamAccountInterface, SteamConfigInterface } from 'contracts/steam/config'
+import { SteamAccountInterface, SteamConfigInterface } from 'Contracts/steam'
 
 import Config from '@ioc:Adonis/Core/Config'
 import Ws from 'App/Services/Ws'
@@ -9,14 +8,15 @@ import SteamGuardRequiredException from 'App/Exceptions/SteamGuardRequiredExcept
 
 const { SteamCmd } = require('steamcmd-interface')
 
-class SteamConsole implements SteamConsoleInterface {
+class SteamConsole {
+  private steamCmd: typeof SteamCmd
 
   /**
    * Update Arma 3 server
    * @param steamAccount Steam account if not registered in config
    */
   public async updateArma (steamAccount?: SteamAccountInterface): Promise<void> {
-    const steamCmd = await this.init(steamAccount)
+    this.steamCmd = await this.init(steamAccount)
 
     const commands = [
       `force_install_dir ${Config.get('arma.basePath')}`,
@@ -26,7 +26,7 @@ class SteamConsole implements SteamConsoleInterface {
     const progressRegex =
       /Update state \((0x\d+)\) (\w+), progress: (\d+.\d+) \((\d+) \/ (\d+)\)$/
 
-    for await (const output of steamCmd.run(commands)) {
+    for await (const output of this.steamCmd.run(commands)) {
       const result = progressRegex.exec(output)
 
       if (result !== null) {
@@ -47,6 +47,10 @@ class SteamConsole implements SteamConsoleInterface {
         })
       }
     }
+  }
+
+  public cancel (): void {
+    this.steamCmd.cleanup()
   }
 
   /**
