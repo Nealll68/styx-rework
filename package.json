@@ -19,6 +19,7 @@
     "@adonisjs/core": "^5.0.4-preview-rc-2.1",
     "@adonisjs/lucid": "^10.0.0",
     "@adonisjs/repl": "^1.0.0",
+    "@adonisjs/view": "^3.1.0",
     "@types/socket.io": "^2.1.13",
     "proxy-addr": "^2.0.6",
     "reflect-metadata": "^0.1.13",
