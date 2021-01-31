@@ -30,7 +30,7 @@ export default class ArmaController {
    * @param HttpContext
    */
   async stop ({ response }: HttpContextContract) {
-    await ArmaServer.stop()
+    ArmaServer.stop()
 
     response.status(204)
   }
@@ -41,7 +41,7 @@ export default class ArmaController {
    * @param HttpContext
    */
   async restart ({ response }: HttpContextContract) {
-    await ArmaServer.stop()
+    ArmaServer.stop()
 
     const profile = await Profile.findByOrFail('isDefault', true)
     await profile.preload('parameter')
