@@ -1,14 +1,15 @@
-import { SteamConsoleInterface } from '@ioc:Styx/Steam/Console'
+import SteamConsoleInterface from 'contracts/steam/console'
 import { SteamAccountInterface, SteamConfigInterface } from 'contracts/steam/config'
 
 import Config from '@ioc:Adonis/Core/Config'
+import Ws from 'App/Services/Ws'
 
 import NoSteamAccountException from 'App/Exceptions/NoSteamAccountException'
 import SteamGuardRequiredException from 'App/Exceptions/SteamGuardRequiredException'
 
 const { SteamCmd } = require('steamcmd-interface')
 
-export default class SteamConsole implements SteamConsoleInterface {
+class SteamConsole implements SteamConsoleInterface {
 
   /**
    * Update Arma 3 server
@@ -22,8 +23,29 @@ export default class SteamConsole implements SteamConsoleInterface {
       'app_update "233780 -beta" validate'
     ]
 
+    const progressRegex =
+      /Update state \((0x\d+)\) (\w+), progress: (\d+.\d+) \((\d+) \/ (\d+)\)$/
+
     for await (const output of steamCmd.run(commands)) {
-      console.log(output)
+      const result = progressRegex.exec(output)
+
+      if (result !== null) {
+        const [
+          stateCode,
+          state,
+          progressPercent,
+          progressAmount,
+          progressTotalAmount
+        ] = result.slice(1)
+        
+        Ws.io.emit('updateArmaProgress', {
+          stateCode,
+          state,
+          progressPercent,
+          progressAmount,
+          progressTotalAmount
+        })
+      }
     }
   }
 
@@ -63,3 +85,5 @@ export default class SteamConsole implements SteamConsoleInterface {
     return steamCmd
   }
 }
+
+export default new SteamConsole()

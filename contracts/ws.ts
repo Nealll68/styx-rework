@@ -1,13 +1,7 @@
-declare module '@ioc:Styx/Ws' {
-  import { Server, Socket } from 'socket.io'
+import { Server, Socket } from 'socket.io'
+export default interface WsInterface {    
+  isReady: boolean
+  io: Server
 
-  export interface WsInterface {    
-    isReady: boolean
-    io: Server
-
-    start(callback: (socket: Socket) => void): void
-  }
-
-  const Ws: WsInterface
-  export default Ws
+  start(callback: (socket: Socket) => void): void
 }

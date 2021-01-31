@@ -5,7 +5,7 @@ import Parameter from 'App/Models/Parameter'
 
 import ProfileValidator from 'App/Validators/ProfileValidator'
 
-import ArmaProfile from '@ioc:Styx/Arma/Profile'
+import ArmaProfile from 'App/Services/Arma/Profile'
 
 export default class ProfilesController {
 

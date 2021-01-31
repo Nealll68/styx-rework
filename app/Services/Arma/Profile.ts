@@ -1,4 +1,4 @@
-import { ArmaProfileInterface } from '@ioc:Styx/Arma/Profile'
+import ArmaProfileInterface from 'contracts/arma/profile'
 import Config from '@ioc:Adonis/Core/Config'
 import Application from '@ioc:Adonis/Core/Application'
 
@@ -19,7 +19,7 @@ import { join } from 'path'
  * ?  Performance: <Arma_folder>/styx/<profileName>/basic.cfg
  * ?  Difficulty: <Arma_folder>/styx/<profileName>/Users/<profileName>/<profileName>.Arma3Profile
  */
-export default class ArmaProfile implements ArmaProfileInterface {
+class ArmaProfile implements ArmaProfileInterface {
   
   private _profileBasePath = process.platform === 'win32'
     ? join(Config.get('arma.basePath'), 'styx')
@@ -85,3 +85,5 @@ export default class ArmaProfile implements ArmaProfileInterface {
   }
 
 }
+
+export default new ArmaProfile()

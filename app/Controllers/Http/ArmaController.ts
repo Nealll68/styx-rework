@@ -1,6 +1,6 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import ArmaServer from '@ioc:Styx/Arma/Server'
-import SteamConsole from '@ioc:Styx/Steam/Console'
+import ArmaServer from 'App/Services/Arma/Server'
+import SteamConsole from 'App/Services/Steam/Console'
 
 import Profile from 'App/Models/Profile'
 

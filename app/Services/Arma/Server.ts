@@ -1,4 +1,4 @@
-import { ArmaServerInterface } from '@ioc:Styx/Arma/Server'
+import ArmaServerInterface from 'contracts/arma/server'
 
 import { ChildProcess, spawn } from 'child_process'
 import { join } from 'path'
@@ -12,7 +12,7 @@ import Parameter from 'App/Models/Parameter'
 
 import ServerExecutableMissingException from 'App/Exceptions/ServerExecutableMissingException'
 
-export default class ArmaServer implements ArmaServerInterface {
+class ArmaServer implements ArmaServerInterface {
 
   private _server: ChildProcess
   private _profileBasePath = process.platform === 'win32'
@@ -119,3 +119,4 @@ export default class ArmaServer implements ArmaServerInterface {
   }
 }
 
+export default new ArmaServer()

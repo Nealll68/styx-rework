@@ -1,5 +1,5 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import ArmaProfile from '@ioc:Styx/Arma/Profile'
+import ArmaProfile from 'App/Services/Arma/Profile'
 
 export default class FilesController {
 

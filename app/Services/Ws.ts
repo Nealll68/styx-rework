@@ -1,4 +1,4 @@
-import { WsInterface } from '@ioc:Styx/Ws'
+import WsInterface from 'contracts/ws'
 import { Server, Socket } from 'socket.io'
 import AdonisServer from '@ioc:Adonis/Core/Server'
 import corsConfig from 'Config/cors'
