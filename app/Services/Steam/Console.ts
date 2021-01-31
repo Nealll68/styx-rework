@@ -11,12 +11,32 @@ const { SteamCmd } = require('steamcmd-interface')
 class SteamConsole {
   private steamCmd: typeof SteamCmd
 
+  constructor (steamCmd: typeof SteamCmd) {    
+    this.steamCmd = steamCmd
+  }
+
+  /**
+   * Init SteamCMD interface and create instance of the SteamConsole class 
+   */
+  public static async init () {
+    const steamCmd = await SteamCmd.init({
+      binDir: Config.get('steam.path'),
+      username: Config.get('steam.account.username')
+    })
+
+    const steamConsole = new SteamConsole(steamCmd)
+    return steamConsole
+  }
+
   /**
    * Update Arma 3 server
+   * 
    * @param steamAccount Steam account if not registered in config
    */
   public async updateArma (steamAccount?: SteamAccountInterface): Promise<void> {
-    this.steamCmd = await this.init(steamAccount)
+    if (!await this.steamCmd.isLoggedIn()) {
+      await this.login(steamAccount)
+    }
 
     const commands = [
       `force_install_dir ${Config.get('arma.basePath')}`,
@@ -41,20 +61,23 @@ class SteamConsole {
         Ws.io.emit('updateArmaProgress', {
           stateCode,
           state,
-          progressPercent,
-          progressAmount,
-          progressTotalAmount
+          progressPercent: parseFloat(progressPercent),
+          progressAmount: parseInt(progressAmount),
+          progressTotalAmount: parseInt(progressTotalAmount)
         })
       }
     }
   }
 
+  /**
+   * Cancel current SteamCMD process
+   */
   public cancel (): void {
     this.steamCmd.cleanup()
   }
 
   /**
-   * This method init the SteamCmd interface and login steam account
+   * Login steam account
    * 
    * ? It will check if an account is registered in config and if not, it will throw
    * ? exception to ask for an account if not present in method parameter
@@ -63,7 +86,7 @@ class SteamConsole {
    * 
    * @param steamAccount Steam account if not registered in config
    */
-  private async init (steamAccount?: SteamAccountInterface) {
+  private async login (steamAccount?: SteamAccountInterface) {
     const steamConfig: SteamConfigInterface = Config.get('steam')
     
     if (!steamConfig.account.username && !steamAccount?.username) {
@@ -76,18 +99,10 @@ class SteamConsole {
       username: steamConfig.account.username ? steamConfig.account.username : steamAccount?.username,
       password: steamConfig.account.password ? steamConfig.account.password : steamAccount?.password
     }
-
-    const steamCmd = await SteamCmd.init({
-      binDir: Config.get('steam.path'),
-      username: account.username
-    })
     
-    if (!await steamCmd.isLoggedIn()) {
-      await steamCmd.login(account.username, account.password, steamAccount?.guard)   
-    }
-
-    return steamCmd
+    await this.steamCmd.login(account.username, account.password, steamAccount?.guard)    
   }
+
 }
 
-export default new SteamConsole()
+export default SteamConsole.init()
