@@ -9,24 +9,8 @@ import SteamGuardRequiredException from 'App/Exceptions/SteamGuardRequiredExcept
 const { SteamCmd } = require('steamcmd-interface')
 
 class SteamConsole {
-  private steamCmd: typeof SteamCmd
-
-  constructor (steamCmd: typeof SteamCmd) {    
-    this.steamCmd = steamCmd
-  }
-
-  /**
-   * Init SteamCMD interface and create instance of the SteamConsole class 
-   */
-  public static async init () {
-    const steamCmd = await SteamCmd.init({
-      binDir: Config.get('steam.path'),
-      username: Config.get('steam.account.username')
-    })
-
-    const steamConsole = new SteamConsole(steamCmd)
-    return steamConsole
-  }
+  private _steamCmd: typeof SteamCmd
+  private _steamCachedUsername: string | undefined
 
   /**
    * Update Arma 3 server
@@ -34,19 +18,17 @@ class SteamConsole {
    * @param steamAccount Steam account if not registered in config
    */
   public async updateArma (steamAccount?: SteamAccountInterface): Promise<void> {
-    if (!await this.steamCmd.isLoggedIn()) {
-      await this.login(steamAccount)
-    }
+    await this.init(steamAccount)
 
     const commands = [
       `force_install_dir ${Config.get('arma.basePath')}`,
       'app_update "233780 -beta" validate'
     ]
 
-    const progressRegex =
-      /Update state \((0x\d+)\) (\w+), progress: (\d+.\d+) \((\d+) \/ (\d+)\)$/
+    const progressRegex = /Update state \((0x\d+)\) (\w+), progress: (\d+.\d+) \((\d+) \/ (\d+)\)$/
 
-    for await (const output of this.steamCmd.run(commands)) {
+    for await (const output of this._steamCmd.run(commands)) {
+      console.log(output)
       const result = progressRegex.exec(output)
 
       if (result !== null) {
@@ -73,7 +55,7 @@ class SteamConsole {
    * Cancel current SteamCMD process
    */
   public cancel (): void {
-    this.steamCmd.cleanup()
+    this._steamCmd.cleanup()
   }
 
   /**
@@ -86,23 +68,78 @@ class SteamConsole {
    * 
    * @param steamAccount Steam account if not registered in config
    */
-  private async login (steamAccount?: SteamAccountInterface) {
+  private async init (steamAccount?: SteamAccountInterface) {
     const steamConfig: SteamConfigInterface = Config.get('steam')
-    
-    if (!steamConfig.account.username && !steamAccount?.username) {
-      throw new NoSteamAccountException()
-    } else if (steamConfig.guard && !steamAccount?.guard) {
-      throw new SteamGuardRequiredException()
-    }
 
     const account = {
-      username: steamConfig.account.username ? steamConfig.account.username : steamAccount?.username,
-      password: steamConfig.account.password ? steamConfig.account.password : steamAccount?.password
+      username: steamConfig.account.username 
+                  ? steamConfig.account.username 
+                  : steamAccount?.username,
+      password: steamConfig.account.password 
+                  ? steamConfig.account.password 
+                  : steamAccount?.password
     }
-    
-    await this.steamCmd.login(account.username, account.password, steamAccount?.guard)    
+        
+    if (!this._steamCmd) {
+      console.log('init')
+      this._steamCmd = await SteamCmd.init({
+        binDir: Config.get('steam.path'),
+        username: account.username
+      })
+
+      for await (const output of this._steamCmd.run(['logout'], { noAutoLogin: true })) {
+        console.log(output)
+      }
+    }
+
+    console.log('test account')
+    if (!account.username) {
+      console.log('set to anonymous')
+      this._steamCachedUsername = 'anonymous'
+    }
+
+    console.log('test login or anonymous')
+    if (!await this._steamCmd.isLoggedIn() || this._steamCachedUsername === 'anonymous') {
+      console.log('need to connect')
+      if (!steamConfig.account.username && !steamAccount?.username) {
+        throw new NoSteamAccountException()
+      } else if (steamConfig.guard && !steamAccount?.guard) {
+        throw new SteamGuardRequiredException()
+      }
+        
+      console.log('login')
+      await this._steamCmd.login(account.username, account.password, steamAccount?.guard)
+      this._steamCachedUsername = account.username
+      console.log('set cached username to', this._steamCachedUsername)
+    }
+
+    console.log('finish')
+
+    /*if (this._init && !await this._steamCmd.isLoggedIn()) {
+      if (!steamConfig.account.username && !steamAccount?.username) {
+        throw new NoSteamAccountException()
+      } else if (steamConfig.guard && !steamAccount?.guard) {
+        throw new SteamGuardRequiredException()
+      }
+
+      await this._steamCmd.login(account.username, account.password, steamAccount?.guard)
+    } else {
+      if (!steamConfig.account.username && !steamAccount?.username) {
+        throw new NoSteamAccountException()
+      } else if (steamConfig.guard && !steamAccount?.guard) {
+        throw new SteamGuardRequiredException()
+      }
+
+      this._steamCmd = await SteamCmd.init({
+        binDir: Config.get('steam.path'),
+        username: account.username
+      })      
+
+      await this._steamCmd.login(account.username, account.password, steamAccount?.guard)
+      this._init = true
+    }*/
   }
 
 }
 
-export default SteamConsole.init()
+export default new SteamConsole()
