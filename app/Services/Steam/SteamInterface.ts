@@ -23,9 +23,22 @@ class SteamInterface {
       await appendFile(tmpFile.path, allCommands.join('\n') + '\n')
 
       this._steamcmd = spawn(Config.get('steam.path'), [`+runscript ${tmpFile.path}`], {})
+
+      this._steamcmd.onData(data => {
+
+      })
+
+      this._steamcmd.onExit(async ({ exitCode }) => {
+        await tmpFile.cleanup()
+      })
     } finally {
       await tmpFile.cleanup()
     }
+  }
+
+  public kill () {
+    if (this._steamcmd)
+      this._steamcmd.kill()
   }
 
 }
