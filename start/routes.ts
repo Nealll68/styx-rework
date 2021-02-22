@@ -18,11 +18,9 @@
 |
 */
 
+import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Route from '@ioc:Adonis/Core/Route'
 import SteamConsole from 'App/Services/Steam/Console'
-
-Route.on('/').render('index')
-Route.on('/login').render('login')
 
 Route.get('/steam/cancel', async () => {
   SteamConsole.cancel()
@@ -45,3 +43,6 @@ Route.group(() => {
   Route.get('/:profile/:file', 'FilesController.show')
   Route.put('/:profile/:file', 'FilesController.update')
 }).prefix('/file')
+
+// SPA
+Route.any('*', async ({ view }: HttpContextContract) => { view.render('app') })
