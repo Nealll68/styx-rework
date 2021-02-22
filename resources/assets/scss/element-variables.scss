@@ -1,0 +1,7 @@
+/* couleur du thème */
+$--color-primary: teal;
+
+/* chemin vers le fichier de police, requis */
+$--font-path: 'element-plus/lib/theme-chalk/fonts';
+
+@import "element-plus/packages/theme-chalk/src/index";
