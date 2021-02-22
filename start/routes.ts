@@ -45,4 +45,4 @@ Route.group(() => {
 }).prefix('/file')
 
 // SPA
-Route.any('*', async ({ view }: HttpContextContract) => { view.render('app') })
+Route.any('*', async ({ view }: HttpContextContract) => view.render('app'))
