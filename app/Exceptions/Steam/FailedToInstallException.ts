@@ -10,12 +10,16 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 | a status code and error code for every exception.
 |
 | @example
-| new SteamGuardRequiredException('message', 500, 'E_RUNTIME_EXCEPTION')
+| new FailedToInstallException('message', 500, 'E_RUNTIME_EXCEPTION')
 |
 */
-export default class SteamGuardRequiredException extends Exception {
+export default class FailedToInstallException extends Exception {
   constructor () {
-    super('Steam Guard code is required', 422, 'E_STEAM_GUARD_REQUIRED')
+    super(
+      'The application failed to install for some reason. Reasons include: you do not own the application, you do not have enough hard drive space, a network error occurred, or the application is not available for your selected platform.', 
+      500, 
+      'E_STEAM_FAILED_TO_INSTALL'
+    )
   }
 
   public async handle (error: this, { response }: HttpContextContract) {

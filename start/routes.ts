@@ -21,6 +21,9 @@
 import Route from '@ioc:Adonis/Core/Route'
 import SteamConsole from 'App/Services/Steam/Console'
 
+Route.on('/').render('index')
+Route.on('/login').render('login')
+
 Route.get('/steam/cancel', async () => {
   SteamConsole.cancel()
 })

@@ -21,12 +21,18 @@
     "./providers/AppProvider",
     "@adonisjs/core",
     "@adonisjs/lucid",
-    "@adonisjs/view"
+    "@adonisjs/view",
+    "@adonisjs/session",
+    "@adonisjs/shield"
   ],
   "aceProviders": [
     "@adonisjs/repl"
   ],
   "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    },
     {
       "pattern": "resources/views/**/*.edge",
       "reloadServer": false

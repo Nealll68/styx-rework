@@ -20,5 +20,6 @@ export default Env.rules({
 	APP_KEY: Env.schema.string(),
 	APP_NAME: Env.schema.string(),
   NODE_ENV: Env.schema.enum(['development', 'production', 'testing'] as const),
-  CACHE_VIEWS: Env.schema.boolean()
+  CACHE_VIEWS: Env.schema.boolean(),
+  SESSION_DRIVER: Env.schema.string()
 })

@@ -1,4 +1,5 @@
 import { ApplicationContract} from '@ioc:Adonis/Core/Application'
+//import SteamConsole from 'App/Services/Steam/Console'
 
 export default class AppProvider {
 	public static needsApplication = true
@@ -10,7 +11,7 @@ export default class AppProvider {
   }
 
   public async boot () {
-    // IoC container is ready
+    // IoC container is ready        
   }
 
   public async ready () {
@@ -24,6 +25,7 @@ export default class AppProvider {
     if (App.default.environment === 'web') {
       await import('../start/socket')
     }
+    
   }
 
   public async shutdown () {

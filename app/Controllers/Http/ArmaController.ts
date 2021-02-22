@@ -6,6 +6,7 @@ import Profile from 'App/Models/Profile'
 
 import { promisify } from 'util'
 
+
 export default class ArmaController {
 
   private _delay = promisify(setTimeout)
@@ -58,10 +59,10 @@ export default class ArmaController {
    * @param HttpContext
    */
   async update ({ request, response }: HttpContextContract) {
-    const { username, password, guard } = request.all()
+    const payload = request.all()
 
-    await SteamConsole.updateArma({ username, password, guard })
-
+    await SteamConsole.updateArma(payload)
+    
     response.status(204)
   }
 

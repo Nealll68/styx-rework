@@ -10,12 +10,12 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 | a status code and error code for every exception.
 |
 | @example
-| new NoSteamAccountException('message', 500, 'E_RUNTIME_EXCEPTION')
+| new InvalidPasswordException('message', 500, 'E_RUNTIME_EXCEPTION')
 |
 */
-export default class NoSteamAccountException extends Exception {
+export default class InvalidPasswordException extends Exception {
   constructor () {
-    super('No steam account registered', 422, 'E_NO_STEAM_ACCOUNT')
+    super('Invalid Steam password', 422, 'E_STEAM_INVALID_PASSWORD')
   }
 
   public async handle (error: this, { response }: HttpContextContract) {
