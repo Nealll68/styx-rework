@@ -1,0 +1,24 @@
+@import "./element-variables.scss";
+@import "./element/form.scss";
+
+body {
+  background-color: #1e1e2f;
+}
+
+#app {
+  font-family: "Roboto", sans-serif;
+}
+
+.app-container {
+  height: 100%;
+}
+
+.el-card {
+  background-color: #27293d;
+  color: #fff;
+  border: none;
+
+  &__header {
+    border-bottom: none;
+  }
+}
