@@ -1,14 +1,14 @@
-import { createApp } from 'vue'
-import router from './router.js'
+import Vue from 'vue'
+import router from '@js/plugins/router'
+import vuetify from '@js/plugins/vuetify'
 
-import ElementPlus from 'element-plus'
-import '../scss/app.scss'
+import App from '@vue/App.vue'
 
-import App from '../vue/App.vue'
+Vue.config.productionTip = false
 
-const app = createApp(App)
-
-app.use(router)
-app.use(ElementPlus)
-
-app.mount('#app')
+new Vue({
+  el: '#app',
+  router,
+  vuetify,
+  render: h => h(App)
+}).$mount('#app')
