@@ -6,8 +6,8 @@ mix.setPublicPath('public')
 
 // Add your assets here
 mix
-  .js('resources/assets/js/app.js', 'scripts')
-  .sass('resources/assets/scss/app.scss', 'styles')
+  .js('resources/assets/js/app.js', 'assets')
+  .sass('resources/assets/scss/app.scss', 'assets')
   .vue()
 
 
