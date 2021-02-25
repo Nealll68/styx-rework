@@ -1,12 +1,13 @@
 <template>
-<el-container class="app-container">
-  <el-main>
-    <router-view></router-view>
-  </el-main>
-</el-container>
+  <v-app>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
 export default {
+  name: 'App'
 }
 </script>
