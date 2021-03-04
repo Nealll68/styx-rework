@@ -8,3 +8,5 @@ tmp
 public/assets/*
 public/mix-manifest.json
 public/hot
+database/*.sqlite3-journal
+database/*.sqlite3
