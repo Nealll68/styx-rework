@@ -25,7 +25,8 @@
     "@adonisjs/view",
     "@adonisjs/session",
     "@adonisjs/shield",
-    "adonis-mix-asset"
+    "adonis-mix-asset",
+    "@adonisjs/auth"
   ],
   "aceProviders": [
     "@adonisjs/repl"
