@@ -5,7 +5,8 @@
   ],
   "exclude": [
     "node_modules",
-    "build"
+    "build",
+    "resources" // Resources folder have it's corresponding TS config
   ],
   "compilerOptions": {
     "strict": true,
@@ -33,7 +34,8 @@
       "@adonisjs/lucid",
       "@adonisjs/view",
       "@adonisjs/session",
-      "@adonisjs/shield"
+      "@adonisjs/shield",
+      "@adonisjs/auth"
     ]
   }
 }
