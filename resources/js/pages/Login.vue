@@ -1,8 +1,10 @@
 <template>
-	<v-container 
+  <h1>Login</h1>
+	<!--<v-container 
     class="fill-height" 
     fluid
   >
+    <h1>Login</h1>
 		<v-row 
       align="center" 
       justify="center"
@@ -26,7 +28,6 @@
             <v-card-text>
               <v-text-field 
                 v-model="username"
-                :rules="requiredRule"
                 label="Username"
                 name="username"
                 prepend-inner-icon="mdi-account"
@@ -35,7 +36,6 @@
 
               <v-text-field 
                 v-model="password"
-                :rules="requiredRule"
                 label="Password"
                 name="password"
                 prepend-inner-icon="mdi-lock"
@@ -57,8 +57,8 @@
               <v-btn 
                 type="submit"
                 color="primary"
-                block                
-                @click="login()"
+                block
+                @click="login"                
                 :loading="loading"
               >Sign in</v-btn>
             </v-card-actions>
@@ -72,61 +72,23 @@
         </v-card>
 			</v-col>
 		</v-row>
-	</v-container>
+	</v-container>-->
 </template>
 
-<script>
-const Logo = () => import('@/components/Logo')
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
-  auth: 'guest',
+@Component
+export default class Login extends Vue {
+   username: string
+   password: string
+   rememberMe: boolean = false
+   formIsValid: boolean = false
+   showPassword: boolean = false
+   loading: boolean = false
 
-  data () {
-    return {
-      formIsValid: false,
-      showPassword: false,
-      loading: false,
-      username: '',
-      password: '',
-      remember: false,
-      requiredRule: [
-        v => !!v || 'Champs requis'
-      ]
-    }
-  },
-
-  components: {
-    Logo
-  },
-
-  methods: {
-    async login () {
-      this.loading = true
-
-      if (this.$refs.form.validate()) {
-        try {
-          await this.$auth.loginWith('local', {
-            data: {
-              username: this.username,
-              password: this.password,
-              remember: this.remember
-            }
-          })
-
-          this.$router.push('/')
-        } catch (ex) {
-          console.log(ex)
-          if (ex.response.data === 'E_PASSWORD_MISMATCH' || ex.response.data === 'E_USER_NOT_FOUND') {
-            this.$snackbar({
-              type: 'error', 
-              message: 'Invalid username or password'
-            })
-          }
-        }
-      }
-
-      this.loading = false      
-    }
-  }
+   async login (): Promise<void> {
+     console.log('login')
+   }
 }
 </script>

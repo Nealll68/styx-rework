@@ -27,9 +27,13 @@
   </svg>
 </template>
 
-<script>
-export default {
-  props: ['width', 'height']
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class Logo extends Vue {
+  @Prop() readonly width: string
+  @Prop() readonly height: string
 }
 </script>
 

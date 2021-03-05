@@ -6,15 +6,26 @@ mix.setPublicPath('public')
 
 // Add your assets here
 mix
-  .js('resources/app.js', 'assets')
-  .sass('resources/assets/app.scss', 'assets')
+  .js('resources/js/main.ts', 'assets')
+  .sass('resources/scss/main.scss', 'assets')
   .vue()
-
-
-  mix.webpackConfig({
+  .webpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.ts$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/,
+          options: {
+            appendTsSuffixTo: /\.vue$/
+          }
+        }
+      ]
+    },
     resolve: {
+      extensions: ['*', '.js', '.vue', '.ts'],
         alias: {
-            "@": path.resolve(__dirname, "resources")
+            "@": path.resolve(__dirname, "resources/js/")
         }
     }
  })
