@@ -1,10 +1,8 @@
 <template>
-  <h1>Login</h1>
-	<!--<v-container 
+  <v-container 
     class="fill-height" 
     fluid
   >
-    <h1>Login</h1>
 		<v-row 
       align="center" 
       justify="center"
@@ -19,13 +17,13 @@
             <Logo width="150px" height="150px" />
             <div class="font-weight-thin display-1">STYX</div>
           </v-card-title>
-
           <v-form 
             v-model="formIsValid" 
             ref="form"
             @submit.prevent="login()"
           >
             <v-card-text>
+
               <v-text-field 
                 v-model="username"
                 label="Username"
@@ -51,8 +49,8 @@
                 color="primary"
                 class="mt-0"
               ></v-checkbox>
-            </v-card-text>
 
+            </v-card-text>
             <v-card-actions>
               <v-btn 
                 type="submit"
@@ -64,7 +62,6 @@
             </v-card-actions>
 					</v-form>
 				</v-card>
-
         <v-card class="mt-3">
           <v-card-text class="text-center">
             Created by <a href="https://www.github.com/Nealll68/styx" target="_blank" rel="noopener noreferrer">Nealll</a>
@@ -72,22 +69,27 @@
         </v-card>
 			</v-col>
 		</v-row>
-	</v-container>-->
+	</v-container>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import Logo from '../components/Logo.vue'
 
-@Component
+@Component({
+  components: {
+    Logo
+  }
+})
 export default class Login extends Vue {
-   username: string
-   password: string
-   rememberMe: boolean = false
+   username: string = ''
+   password: string = ''
+   remember: boolean = false
    formIsValid: boolean = false
    showPassword: boolean = false
    loading: boolean = false
 
-   async login (): Promise<void> {
+   login (): void {
      console.log('login')
    }
 }

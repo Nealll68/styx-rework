@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
 @Component
 export default class Logo extends Vue {
   @Prop() readonly width: string
@@ -46,7 +45,6 @@ export default class Logo extends Vue {
   stroke-dashoffset: 0;
   animation: draw 5s ease-in-out;
 }
-
 @keyframes draw {
   from {
     stroke-dashoffset: 5175.60595703125;

@@ -6,7 +6,7 @@ coverage
 .env
 tmp
 public/assets/*
-public/mix-manifest.json
+public/manifest.json
 public/hot
 database/*.sqlite3-journal
 database/*.sqlite3
