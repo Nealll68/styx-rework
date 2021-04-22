@@ -4,8 +4,7 @@
     "./commands",
     "@adonisjs/core/build/commands",
     "@adonisjs/repl/build/commands",
-    "@adonisjs/lucid/build/commands",
-    "adonis-mix-asset/build/commands"
+    "@adonisjs/lucid/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -31,7 +30,6 @@
     "@adonisjs/view",
     "@adonisjs/session",
     "@adonisjs/shield",
-    "adonis-mix-asset",
     "@adonisjs/auth"
   ],
   "aceProviders": [
