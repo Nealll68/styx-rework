@@ -8,7 +8,7 @@
     "dev": "node ace serve --watch"
   },
   "devDependencies": {
-    "@adonisjs/assembler": "^5.1.0",
+    "@adonisjs/assembler": "^3.0.0",
     "@vue/compiler-sfc": "^3.0.11",
     "adonis-preset-ts": "^2.1.0",
     "deepmerge": "^4.2.2",
@@ -27,13 +27,13 @@
     "youch-terminal": "^1.1.0"
   },
   "dependencies": {
-    "@adonisjs/auth": "^8.0.0",
-    "@adonisjs/core": "^5.1.4",
-    "@adonisjs/lucid": "^13.0.0",
-    "@adonisjs/repl": "^3.0.0",
-    "@adonisjs/session": "^6.0.1",
-    "@adonisjs/shield": "^7.0.0",
-    "@adonisjs/view": "^6.0.0",
+    "@adonisjs/auth": "^5.1.1",
+    "@adonisjs/core": "5.0.4-preview-rc-2.1",
+    "@adonisjs/lucid": "^10.0.0",
+    "@adonisjs/repl": "^1.0.0",
+    "@adonisjs/session": "^4.0.6",
+    "@adonisjs/shield": "^4.0.3",
+    "@adonisjs/view": "^3.1.0",
     "@types/socket.io": "^2.1.13",
     "phc-argon2": "^1.1.0",
     "proxy-addr": "^2.0.6",

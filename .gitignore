@@ -10,3 +10,4 @@ public/manifest.json
 public/hot
 database/*.sqlite3-journal
 database/*.sqlite3
+yarn-error.log
