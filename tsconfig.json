@@ -26,6 +26,9 @@
       ],
       "Database/*": [
         "./database/*"
+      ],
+      "@/*": [
+        "./resources/js/*"
       ]
     },
     "types": [
