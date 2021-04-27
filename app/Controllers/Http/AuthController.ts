@@ -17,9 +17,9 @@ export default class AuthController {
 
 
   public async login ({ request, auth, response }: HttpContextContract) {
-    const { username, password, rememberMe } = request.all()
+    const { username, password, remember } = request.all()
 
-    await auth.attempt(username, password, rememberMe)
+    await auth.attempt(username, password, remember)
 
     response.status(204)
   }
