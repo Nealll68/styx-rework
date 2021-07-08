@@ -18,9 +18,10 @@
 |
 */
 
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Route from '@ioc:Adonis/Core/Route'
 import SteamConsole from 'App/Services/Steam/Console'
+
+Route.inertia('/', 'Login')
 
 Route.group(() => {
 
@@ -50,7 +51,3 @@ Route.group(() => {
   }).prefix('/file')
   
 }).prefix('/api')
-
-
-// SPA
-Route.any('*', async ({ view }: HttpContextContract) => view.render('app'))

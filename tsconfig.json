@@ -39,7 +39,8 @@
       "@adonisjs/view",
       "@adonisjs/session",
       "@adonisjs/shield",
-      "@adonisjs/auth"
+      "@adonisjs/auth",
+      "@eidellev/inertia-adonisjs"
     ]
   }
 }

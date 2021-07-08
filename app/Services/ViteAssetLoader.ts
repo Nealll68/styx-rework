@@ -16,7 +16,7 @@ export default class ViteAssetLoader {
 
   readonly devViteUrl: string = 'http://localhost:3000/assets'
 
-  readonly mainUrl: string = 'js/main.ts'
+  readonly mainUrl: string = 'js/app.js'
 
   private manifest: ManifestInterface
 
@@ -43,7 +43,7 @@ export default class ViteAssetLoader {
   private assetProd () {
     if (!this.manifest) {
       const fileContent = readFileSync(this.manifestPath, 'utf-8')
-      this.manifest = JSON.parse(fileContent)['js/main.ts']
+      this.manifest = JSON.parse(fileContent)['js/app.js']
     }
 
     const js = this.manifest.file

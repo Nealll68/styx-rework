@@ -21,6 +21,12 @@
       "environment": [
         "web"
       ]
+    },
+    {
+      "file": "./start/inertia",
+      "environment": [
+        "web"
+      ]
     }
   ],
   "providers": [
@@ -30,7 +36,8 @@
     "@adonisjs/view",
     "@adonisjs/session",
     "@adonisjs/shield",
-    "@adonisjs/auth"
+    "@adonisjs/auth",
+    "@eidellev/inertia-adonisjs"
   ],
   "aceProviders": [
     "@adonisjs/repl"

@@ -27,19 +27,16 @@
   </svg>
 </template>
 
-<script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-@Component
-export default class Logo extends Vue {
-  @Prop() readonly width: string
-  @Prop() readonly height: string
+<script>
+export default {
+  props: ['width', 'height']
 }
 </script>
 
 <style>
 .path {
   fill-opacity: 0;
-  stroke: #3f72af;
+  stroke: #516dff;
   stroke-width: 15;
   stroke-dasharray: 5175.60595703125;
   stroke-dashoffset: 0;
