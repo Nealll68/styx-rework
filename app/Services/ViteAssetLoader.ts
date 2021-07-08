@@ -8,6 +8,10 @@ interface ManifestInterface {
   css: string[]
 }
 
+/**
+ * TODO: Use caching system
+ */
+
 export default class ViteAssetLoader {
 
   readonly dev: boolean = viteConfig.dev
