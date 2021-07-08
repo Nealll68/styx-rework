@@ -17,6 +17,7 @@
             <Logo width="150px" height="150px" />
             <div class="font-weight-thin display-1">STYX</div>
           </v-card-title>
+
           <v-form 
             v-model="formIsValid" 
             ref="form"
@@ -30,6 +31,8 @@
                 name="username"
                 prepend-inner-icon="mdi-account"
                 filled
+                required
+                :rules="[v => !!v || 'Username is required']"
               ></v-text-field>
 
               <v-text-field 
@@ -41,6 +44,8 @@
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 @click:append="showPassword = !showPassword" 
                 filled
+                required
+                :rules="[v => !!v || 'Password is required']"
               ></v-text-field>
 
               <v-checkbox
@@ -55,9 +60,9 @@
               <v-btn 
                 type="submit"
                 color="primary"
-                block
-                @click="login"                
+                block            
                 :loading="loading"
+                :disabled="!formIsValid"
               >Sign in</v-btn>
             </v-card-actions>
 					</v-form>
@@ -74,7 +79,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import Logo from '../components/Logo.vue'
+import Logo from '@/components/Logo.vue'
+
+import axios from '@/plugins/axios'
 
 @Component({
   components: {
@@ -82,15 +89,30 @@ import Logo from '../components/Logo.vue'
   }
 })
 export default class Login extends Vue {
-   username: string = ''
-   password: string = ''
-   remember: boolean = false
-   formIsValid: boolean = false
-   showPassword: boolean = false
-   loading: boolean = false
+  username: string = ''
+  password: string = ''
+  remember: boolean = false
+  formIsValid: boolean = false
+  showPassword: boolean = false
+  loading: boolean = false
 
-   login (): void {
-     console.log('login')
-   }
+  async login (): Promise<void> {
+    /*try {
+      this.loading = true
+
+      await axios.post('/api/login', {
+        username: this.username,
+        password: this.password,
+        remember: this.remember
+      })
+      
+      console.log("logged")
+    } catch (ex) {
+      console.log(ex.message)
+    } finally {
+      this.loading = false
+    }*/
+    Vue.toast('success', 'Test')
+  }
 }
 </script>
