@@ -9,10 +9,9 @@
 */
 
 import ViteAssetLoader from 'App/Services/ViteAssetLoader'
-import Application from '@ioc:Adonis/Core/Application'
 import View from '@ioc:Adonis/Core/View'
 
 View.global('assets', (): string => {
-  const assetLoader = new ViteAssetLoader(Application.publicPath('assets', 'manifest.json'))
+  const assetLoader = new ViteAssetLoader()
   return assetLoader.asset()
 })

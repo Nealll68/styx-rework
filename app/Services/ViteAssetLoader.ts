@@ -1,4 +1,4 @@
-import Env from '@ioc:Adonis/Core/Env'
+import viteConfig from 'Config/vite'
 import { readFileSync } from 'fs'
 
 interface ManifestInterface {
@@ -10,20 +10,15 @@ interface ManifestInterface {
 
 export default class ViteAssetLoader {
 
-  readonly dev: boolean
+  readonly dev: boolean = viteConfig.dev
 
-  readonly manifestPath: string
+  readonly manifestPath: string = viteConfig.manifestPath
 
-  readonly devViteUrl: string = 'http://localhost:3000/assets'
+  readonly devUrl: string = viteConfig.devUrl
 
-  readonly mainUrl: string = 'js/app.js'
+  readonly mainUrl: string = viteConfig.mainUrl
 
   private manifest: ManifestInterface
-
-  constructor (manifestPath: string) {
-    this.dev = Env.get('NODE_ENV') === 'development'
-    this.manifestPath = manifestPath
-  }
 
   public asset () {
     if (this.dev) {
@@ -35,8 +30,8 @@ export default class ViteAssetLoader {
 
   private assetDev () {
     return `
-      <script src="${this.devViteUrl}/@vite/client" type="module" defer></script>
-      <script src="${this.devViteUrl}/${this.mainUrl}" type="module" defer></script>
+      <script src="${this.devUrl}/@vite/client" type="module" defer></script>
+      <script src="${this.devUrl}/${this.mainUrl}" type="module" defer></script>
     `
   }
 
