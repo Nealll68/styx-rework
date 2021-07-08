@@ -12,13 +12,13 @@
               <v-form v-model="formValid" @submit.prevent="login">              
                 <v-card-text>
                   <v-alert 
-                    v-if="errors && errors.credentials"
+                    v-if="$page.props.errors && $page.props.errors.credentials"
                     type="error"
                     border="left"
                     dense
                     text
                   >
-                    {{ errors.credentials }}
+                    {{ $page.props.errors.credentials }}
                   </v-alert>
 
                   <v-text-field
@@ -68,10 +68,6 @@
 import Logo from '@/components/Logo.vue'
 
 export default {
-  props: {
-    errors: Object
-  },
-
   components: {
     Logo
   },

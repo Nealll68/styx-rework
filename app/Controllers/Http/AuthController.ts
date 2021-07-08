@@ -1,33 +1,29 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import User from 'App/Models/User'
-import UserValidator from 'App/Validators/UserValidator'
 
 export default class AuthController {
 
-  public async register ({ request, response }: HttpContextContract) {
-    const { username, password } = await request.validate(UserValidator)
-
-    await User.create({
-      username,
-      password
-    })
-
-    response.status(204)
+  public async index ({ inertia }: HttpContextContract) {
+    return inertia.render('Login')
   }
 
-
-  public async login ({ request, auth, response }: HttpContextContract) {
+  public async login ({ request, auth, response, session }: HttpContextContract) {
     const { username, password, remember } = request.all()
 
-    await auth.attempt(username, password, remember)
-
-    response.status(204)
+    try {
+      await auth.attempt(username, password, remember)
+      response.redirect('/')
+    } catch {
+      session.flash('errors', {
+        credentials: 'The provided credentials do not match with existings accounts'
+      })
+      response.redirect().back()
+    }
   }
 
   public async logout ({ auth, response }: HttpContextContract) {
     await auth.logout()
 
-    response.status(204)
+    response.redirect('/login')
   }
 
 }
