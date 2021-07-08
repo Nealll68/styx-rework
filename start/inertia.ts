@@ -8,10 +8,14 @@
 |
 */
 
-import Inertia from '@ioc:EidelLev/Inertia';
+import Inertia from '@ioc:EidelLev/Inertia'
 
 Inertia.share({
   errors: (ctx) => {
-    return ctx.session.flashMessages.get('errors');
+    return ctx.session.flashMessages.get('errors')
   },
+
+  flash: (ctx) => {
+    return ctx.session.flashMessages.get('message')
+  }
 });
