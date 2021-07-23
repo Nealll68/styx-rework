@@ -52,14 +52,15 @@
     <v-main>
       <v-container fluid>
         <v-snackbar
+          v-if="$page.props.flash && $page.props.flash.success"
           app
           top
           right
-          :value="flash.success"
+          :value="$page.props.flash.success"
           :timeout="6000"
           class="snack-success"
         >
-          <v-icon left color="success">mdi-check</v-icon>{{ flash.success }}
+          <v-icon left color="success">mdi-check</v-icon>{{ $page.props.flash.success }}
         </v-snackbar>
 
         <slot/>
@@ -74,10 +75,6 @@ import Sidebar from '@/components/Sidebar.vue'
 import ServerControls from '@/components/ServerControls.vue'
 
 export default {
-  props: {
-    flash: Object,
-  },
-
   components: {
     Sidebar,
     Logo,
