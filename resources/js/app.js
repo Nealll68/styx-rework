@@ -3,6 +3,8 @@ import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import vuetify from './plugins/vuetify'
 
+import '../scss/app.scss'
+
 import Layout from './Layout.vue'
 
 InertiaProgress.init({
