@@ -15,13 +15,7 @@
   },
   "preloads": [
     "./start/routes",
-    "./start/kernel",
-    {
-      "file": "./start/viewGlobals",
-      "environment": [
-        "web"
-      ]
-    },
+    "./start/kernel",    
     {
       "file": "./start/inertia",
       "environment": [
@@ -37,7 +31,9 @@
     "@adonisjs/session",
     "@adonisjs/shield",
     "@adonisjs/auth",
-    "@eidellev/inertia-adonisjs"
+    "@eidellev/inertia-adonisjs",
+    "adonis5-cache",
+    "./providers/ViteProvider"
   ],
   "aceProviders": [
     "@adonisjs/repl"

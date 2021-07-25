@@ -1,6 +1,8 @@
-import viteConfig from 'Config/vite'
-import { readFileSync } from 'fs'
+import { ViteAssetLoaderContract } from 'contracts/vite';
+import { CacheManagerContract } from '@ioc:Adonis/Addons/Adonis5-Cache'
+import { readFile } from 'fs/promises'
 
+import viteConfig from 'Config/vite'
 interface ManifestInterface {
   file: string,
   src: string,
@@ -8,55 +10,45 @@ interface ManifestInterface {
   css: string[]
 }
 
-/**
- * TODO: Use caching system
- */
+export default class ViteAssetLoader implements ViteAssetLoaderContract {
 
-export default class ViteAssetLoader {
+  private readonly manifestPath: string = viteConfig.manifestPath
 
-  readonly dev: boolean = viteConfig.dev
+  private readonly devUrl: string = viteConfig.devUrl
 
-  readonly manifestPath: string = viteConfig.manifestPath
+  private readonly mainUrl: string = viteConfig.mainUrl
 
-  readonly devUrl: string = viteConfig.devUrl
+  constructor (private readonly cache: CacheManagerContract) {}
 
-  readonly mainUrl: string = viteConfig.mainUrl
-
-  private manifest: ManifestInterface
-
-  public asset () {
-    if (this.dev) {
-      return this.assetDev()
-    }
-
-    return this.assetProd()
-  }
-
-  private assetDev () {
+  public assetDev (): string {
     return `
       <script src="${this.devUrl}/@vite/client" type="module" defer></script>
       <script src="${this.devUrl}/${this.mainUrl}" type="module" defer></script>
     `
   }
 
-  private assetProd () {
-    if (!this.manifest) {
-      const fileContent = readFileSync(this.manifestPath, 'utf-8')
-      this.manifest = JSON.parse(fileContent)['js/app.js']
+  public async assetProd (): Promise<string> {
+    let manifest = await this.cache.get<ManifestInterface>('vite-manifest')
+    if (!manifest) {
+      const fileContent = await readFile(this.manifestPath, 'utf-8')
+      manifest = JSON.parse(fileContent)['js/app.js']
+
+      await this.cache.put('vite-manifest', manifest)
     }
 
-    const js = this.manifest.file
-    const cssFiles = this.manifest.css
+    if (!manifest?.file) return ''
 
-    if (!js) {
-      return ''
+    let html = `<script src="/assets/${manifest.file}" type="module" defer></script>`
+
+    if (manifest?.css) {
+      for (const css of manifest.css) html += `<link rel="stylesheet" href="/assets/${css}">`
     }
-
-    let html = `<script src="/assets/${js}" type="module" defer></script>`
-
-    for (const css of cssFiles) html += `<link rel="stylesheet" href="/assets/${css}">`
 
     return html
+  }
+
+  public async flushCache (): Promise<void> {
+    await this.cache.put('vite-manifest', null)
   }
 
 }
