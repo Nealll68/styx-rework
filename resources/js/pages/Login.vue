@@ -52,7 +52,7 @@
                     color="primary"
                     block
                     :disabled="!formValid"
-                    :loading="form.processing"
+                    :loading="false"
                   >Sign in</v-btn>
                 </v-card-actions>
               </v-form>
@@ -64,36 +64,41 @@
   </v-app>  
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, reactive, ref } from '@vue/composition-api'
+import { Inertia } from '@inertiajs/inertia'
 import Logo from '@/components/Logo.vue'
 
-export default {
+export default defineComponent({
   components: {
     Logo
   },
 
-  data () {
-    return {
-      form: this.$inertia.form({
-        username: null,
-        password: null,
-        remember: false
-      }),
-      formValid: false,
-      showPassword: false,
+  setup() {
+    const form = reactive({
+      username: null,
+      password: null,
+      remember: false
+    }) 
+    const rules = reactive({
+      required: (value: string) => !!value || 'Required'
+    })
+    const formValid = ref(false)
+    const showPassword = ref(false)
 
-      rules: {
-        required: value => !!value || 'Required'
+    function login (): void {
+      if (formValid) {
+        Inertia.post('/login', form)        
       }
     }
-  },
 
-  methods: {
-    async login () {
-      if (this.formValid) {
-        this.form.post('/login')
-      }
+    return {
+      form, 
+      rules,
+      formValid,
+      showPassword,
+      login,
     }
   }
-}
+})
 </script>
