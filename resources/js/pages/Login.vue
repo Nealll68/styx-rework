@@ -49,7 +49,7 @@
                 <v-card-actions>
                   <v-btn 
                     type="submit"
-                    color="accent" 
+                    color="primary"
                     block
                     :disabled="!formValid"
                     :loading="form.processing"

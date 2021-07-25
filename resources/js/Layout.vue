@@ -11,8 +11,8 @@
       <template v-slot:append>
         <div class="pa-2">
           <v-btn
+            color="primary"
             block
-            color="accent"
             depressed
             @click="$inertia.visit('/users/show')"
             class="mb-2"
