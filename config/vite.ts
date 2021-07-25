@@ -44,7 +44,7 @@ const ArmaConfig: ViteConfigInterface = {
   | URL to the main js file
   |
   */
-  mainUrl: 'js/app.js'
+  mainUrl: 'js/app.ts'
 }
 
 export default ArmaConfig
