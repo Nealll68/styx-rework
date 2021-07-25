@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueCompositionAPI from '@vue/composition-api'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import vuetify from './plugins/vuetify'
@@ -6,6 +7,8 @@ import vuetify from './plugins/vuetify'
 import '../scss/app.scss'
 
 import Layout from './Layout.vue'
+
+Vue.use(VueCompositionAPI)
 
 InertiaProgress.init({
   color: '#516dff',
