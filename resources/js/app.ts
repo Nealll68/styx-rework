@@ -15,7 +15,10 @@ InertiaProgress.init({
   showSpinner: true
 })
 
-createInertiaApp({
+createInertiaApp({  
+  // @ts-ignore
+  title: (title: string) => `${title} - Styx`,
+
   resolve: (name: string) => import(`./pages/${name}.vue`).then(module => {
     if (name !== 'Login') {
       module.default.layout = module.default.layout || Layout      
