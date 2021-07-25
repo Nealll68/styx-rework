@@ -26,7 +26,7 @@ export default defineConfig({
       output: {
         manualChunks: undefined
       },
-      input: './resources/js/app.js'
+      input: './resources/js/app.ts'
     }
   }
 })

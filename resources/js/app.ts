@@ -16,7 +16,7 @@ InertiaProgress.init({
 })
 
 createInertiaApp({
-  resolve: name => import(`./pages/${name}.vue`).then(module => {
+  resolve: (name: string) => import(`./pages/${name}.vue`).then(module => {
     if (name !== 'Login') {
       module.default.layout = module.default.layout || Layout      
     }

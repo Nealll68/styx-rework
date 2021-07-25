@@ -1,4 +1,8 @@
 {
+  "include": ["js/*"],
+
+  "exclude": [],
+
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
