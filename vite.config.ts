@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import { resolve } from 'path'
-//import vue from '@vitejs/plugin-vue'
 const { createVuePlugin } = require('vite-plugin-vue2')
 
 // https://vitejs.dev/config/
