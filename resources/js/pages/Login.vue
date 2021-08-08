@@ -1,6 +1,6 @@
 <template>  
   <v-app>
-    <Head title="Login" />
+    <AppHead title="Login"/>
     
     <v-main>
       <v-container fluid fill-height>
@@ -69,13 +69,13 @@
 <script lang="ts">
 import { defineComponent, reactive, ref } from '@vue/composition-api'
 import { Inertia } from '@inertiajs/inertia'
-import { Head } from '@inertiajs/inertia-vue'
+import AppHead from '@/components/AppHead.vue'
 import Logo from '@/components/Logo.vue'
 
 export default defineComponent({
   components: {
     Logo,
-    Head
+    AppHead
   },
 
   setup() {
