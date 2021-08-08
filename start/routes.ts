@@ -22,10 +22,16 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import Route from '@ioc:Adonis/Core/Route'
 // import SteamConsole from 'App/Services/Steam/Console'
 
-Route.inertia('/', 'Dashboard')
-
 Route.get('login', 'AuthController.index')
 Route.post('login', 'AuthController.login')
+
+Route.group(() => {
+  Route.get('logout', 'AuthController.logout')
+
+  Route.inertia('/', 'Dashboard')
+
+  Route.inertia('/users', 'Users')
+}).middleware('auth')
 
 // Route.group(() => {
 
