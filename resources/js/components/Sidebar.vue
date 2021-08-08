@@ -3,9 +3,7 @@
     nav
     dense    
   >
-    <v-list-item-group
-      color="accent"
-    >
+    <v-list-item-group>
       <v-list-item 
         v-for="link in links" 
         :key="link.name" 
