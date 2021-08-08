@@ -69,12 +69,13 @@
   </v-app>
 </template>
 
-<script>
+<script lang="ts">
 import Logo from '@/components/Logo.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import ServerControls from '@/components/ServerControls.vue'
+import { defineComponent } from '@vue/composition-api'
 
-export default {
+export default defineComponent({
   components: {
     Sidebar,
     Logo,
@@ -86,5 +87,5 @@ export default {
       sidebar: null
     }
   },
-}
+})
 </script>
