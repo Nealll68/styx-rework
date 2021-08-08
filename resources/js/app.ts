@@ -15,8 +15,7 @@ InertiaProgress.init({
   showSpinner: true
 })
 
-createInertiaApp({  
-  // @ts-ignore
+createInertiaApp({    
   title: (title: string) => `${title} - Styx`,
 
   resolve: (name: string) => import(`./pages/${name}.vue`).then(module => {
