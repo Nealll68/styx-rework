@@ -6,7 +6,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-btn
         block
-        color="accent"
+        color="primary"
         v-on="on"
         v-bind="attrs"
       >
@@ -27,7 +27,7 @@
             outlined
             label="Username"
             :rules="rules.username"
-            :error-messages="form.errors.username"
+            :error-messages="form.errors && form.errors.username"
             :counter="30"
           ></v-text-field>
 
@@ -38,29 +38,29 @@
             :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
             :type="showPassword ? 'text' : 'password'"
             :rules="rules.password"
-            :error-messages="form.errors.password"  
+            :error-messages="form.errors && form.errors.password"
             @click:append="showPassword = !showPassword"
           ></v-text-field>
 
-          <v-checkbox
-            v-model="form.is_admin"
+          <v-switch
+            v-model="form.admin"
             label="Administrator"
             color="error"
-          ></v-checkbox>
+            class="mt-0"
+          ></v-switch>
         </v-card-text>
 
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
+        <v-card-actions class="justify-center stripe">
           <v-btn 
             type="submit"
-            color="accent"
+            color="primary"
+            width="40%"
             :loading="form.processing"
           >Create</v-btn>
 
           <v-btn
             text
-            color="error"
+            width="40%"
             @click="dialog = !dialog"
           >Cancel</v-btn>
         </v-card-actions>
@@ -69,47 +69,45 @@
   </v-dialog>
 </template>
 
-<script>
-export default {
-  data () {
-    return {
-      dialog: false,
-      showPassword: false,
+<script lang="ts">
+import { defineComponent, reactive, ref } from "@vue/composition-api"
+import { passwordRules, usernameRules } from '@/rules'
+import useForm from '@/composables/useForm'
 
-      form: this.$inertia.form({
-        username: null,
-        password: null,
-        is_admin: false
-      }),
+export default defineComponent({
+  setup () {    
+    const dialog = ref(false)
+    const showPassword = ref(false)
+    const createUserForm: any = ref(null)
+    const form = useForm({
+      username: null,
+      password: null,
+      admin: false
+    })
+    const rules = reactive({
+      username: usernameRules, 
+      password: passwordRules,
+    })
 
-      rules: {
-        username: [
-          v => !!v || 'Required',
-          v => (v || '').length <= 30 || 'Maximum 30 characters authorized'
-        ],
-        password: [
-          v => !!v || 'Required',
-          v => (v || '').length >= 8 || 'Minimum 8 characters required',
-          v => /^(?=.*[a-z])/.test(v) || 'Must contain at least 1 lowercase character',
-          v => /^(?=.*[A-Z])/.test(v) || 'Must contain at least 1 uppercase character',
-          v => /^(?=.*[0-9])/.test(v) || 'Must contain at least 1 numeric character',
-          v => /(?=.*?[#?!@$%^&*-])/.test(v) || 'Must contain at least 1 special character'
-        ],
-      }
-    }
-  },
-
-  methods: {
-    store () {
-      if (this.$refs.createUserForm.validate()) {
-        this.form.post('/users', {
-          onSuccess: () => { 
-            this.dialog = false
-            this.form.reset()
+    const store = async () => {
+      if (createUserForm.value.validate()) {
+        form.post('/users', {
+          onSuccess: () => {
+            form.reset()
+            dialog.value = false
           }
-        })
-      }
+        })        
+      }      
+    }
+
+    return {
+      dialog,
+      showPassword,
+      createUserForm,
+      form,
+      rules,
+      store
     }
   }
-}
+})
 </script>

@@ -7,10 +7,10 @@
         </h1>
       </v-col>
 
-      <v-col :class="authUser.is_admin ? 'stripe' : 'stripe mr-3'">
+      <v-col :class="auth.admin ? 'stripe' : 'stripe mr-3'">
       </v-col>
 
-      <v-col cols="2" class="text-center" v-if="authUser.is_admin">
+      <v-col cols="2" class="text-center" v-if="auth.admin">
         <create-user/>
       </v-col>
     </v-row>
@@ -21,9 +21,9 @@
           :headers="headers"
           :items="users"
         >
-          <template v-slot:[`item.is_admin`]="{ item }">
+          <template v-slot:[`item.admin`]="{ item }">
             <v-chip 
-              v-if="item.is_admin"
+              v-if="item.admin"
               outlined
               label
               color="error"
@@ -40,7 +40,7 @@
             </v-chip>
           </template>
 
-          <template v-slot:[`item.actions`]="{ item }" v-if="authUser.is_admin">
+          <template v-slot:[`item.actions`]="{ item }" v-if="auth.admin">
             <v-btn
               text
               small
@@ -56,34 +56,39 @@
   </section>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent, PropType } from '@vue/composition-api'
 import CreateUser from '@/components/CreateUser.vue'
 
-export default {
+import { UserInterface } from '@/interfaces/user'
+
+export default defineComponent({
   props: {
-    users: Array,
-    authUser: Object
+    users: Array as PropType<UserInterface[]>,
+    auth: Object as PropType<UserInterface>
   },
 
   components: {
     CreateUser
   },
 
-  data () {
-    return {
-      headers: [
-        { text: 'Username', value: 'username' },
-        { text: 'Created at', value: 'created_at' },
-        { text: 'Authorization', value: 'is_admin' },
-        { text: '', value: 'actions', sortable: false }
-      ]
-    }
-  },
+  setup () {
+    const headers = [
+      { text: 'Username', value: 'username' },
+      { text: 'Created at', value: 'created_at' },
+      { text: 'Authorization', value: 'admin' },
+      { text: '', value: 'actions', sortable: false }
+    ]
 
-  methods: {
-    deleteUser (user) {
-      this.$inertia.delete(`/users/${user.id}`, user)
+    const deleteUser = (user: UserInterface) => {
+      console.log(user)
+      // this.$inertia.delete(`/users/${user.id}`, user)
+    }
+
+    return {
+      headers,
+      deleteUser
     }
   }
-}
+})
 </script>

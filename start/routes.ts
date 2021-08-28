@@ -1,4 +1,3 @@
-import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -30,7 +29,8 @@ Route.group(() => {
 
   Route.inertia('/', 'Dashboard')
 
-  Route.inertia('/users', 'Users')
+  // Route.inertia('/users', 'Users')
+  Route.resource('users', 'UsersController')
 }).middleware('auth')
 
 // Route.group(() => {

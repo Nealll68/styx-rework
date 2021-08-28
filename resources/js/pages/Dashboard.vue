@@ -9,7 +9,7 @@
 import { defineComponent, PropType } from '@vue/composition-api'
 import AppHead from '@/components/AppHead.vue'
 
-import { AuthInterface } from '@/interfaces/auth'
+import { UserInterface } from '@/interfaces/user'
 
 export default defineComponent({
   components: {
@@ -17,7 +17,7 @@ export default defineComponent({
   },
 
   props: {
-    auth: Object as PropType<AuthInterface>
+    auth: Object as PropType<UserInterface>
   },
 
   setup(props) {
