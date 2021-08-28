@@ -59,6 +59,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
 import CreateUser from '@/components/CreateUser.vue'
+import { AuthInterface } from '@/interfaces/auth'
 
 import { UserInterface } from '@/interfaces/user'
 
