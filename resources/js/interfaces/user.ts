@@ -1,4 +1,4 @@
-export interface AuthInterface {
+export interface UserInterface {
   id: number,
   username: string,
   adminm: boolean,
