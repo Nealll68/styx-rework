@@ -20,6 +20,7 @@
         <v-data-table
           :headers="headers"
           :items="users"
+          :loading="usersLoading"
         >
           <template v-slot:[`item.admin`]="{ item }">
             <v-chip 
@@ -45,6 +46,7 @@
               text
               small
               color="error"
+              :disabled="usersLoading"
               @click="deleteUser(item)"
             >
               <v-icon left>mdi-account-remove</v-icon>Delete
@@ -57,12 +59,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from '@vue/composition-api'
+import { defineComponent, PropType, ref } from '@vue/composition-api'
 import { injectStrict } from '@/composables/injectStrict'
 import CreateUser from '@/components/CreateUser.vue'
 
 import { UserInterface } from '@/interfaces/user'
 import { useConfirmKey } from '@/composables/useConfirm'
+import { Inertia } from '@inertiajs/inertia'
 
 export default defineComponent({
   props: {
@@ -81,6 +84,7 @@ export default defineComponent({
       { text: 'Authorization', value: 'admin' },
       { text: '', value: 'actions', sortable: false }
     ]
+    const usersLoading = ref(false)
 
     const confirm = injectStrict(useConfirmKey)
 
@@ -90,12 +94,17 @@ export default defineComponent({
         message: 'This action is ireversible'
       })
 
-      console.log(confirmed, user)
-      // this.$inertia.delete(`/users/${user.id}`, user)
+      if (confirmed) {
+        Inertia.delete(`/users/${user.id}`, {
+          onStart: () => usersLoading.value = true,
+          onFinish: () => usersLoading.value = false
+        })
+      }
     }
 
     return {
       headers,
+      usersLoading,
       deleteUser
     }
   }

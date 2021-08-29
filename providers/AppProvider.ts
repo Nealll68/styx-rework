@@ -11,6 +11,12 @@ export default class AppProvider {
 
   public async boot () {
     // IoC container is ready
+    const Response = this.app.container.use('Adonis/Core/Response')
+
+    Response.macro('flash', function (flashObject) {
+      this.ctx!.session.flash(flashObject)
+      return this
+    })
   }
 
   public async ready () {

@@ -51,7 +51,7 @@
 
     <v-main>
       <v-container fluid>
-        <v-snackbar
+        <!-- <v-snackbar
           v-if="$page.props.flash && $page.props.flash.success"
           app
           top
@@ -60,8 +60,9 @@
           :timeout="6000"
           class="snack-success"
         >
-          <v-icon left color="success">mdi-check</v-icon>{{ $page.props.flash.success }}
-        </v-snackbar>
+          <v-icon left color="success">mdi-check</v-icon>
+          <span v-html="$page.props.flash.success"></span>
+        </v-snackbar> -->
 
         <slot/>
       </v-container>
@@ -80,7 +81,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, provide, ref } from '@vue/composition-api'
+import { defineComponent, provide, ref, toRefs, watch, inject } from '@vue/composition-api'
 
 import Logo from '@/components/Logo.vue'
 import Sidebar from '@/components/Sidebar.vue'
@@ -90,6 +91,10 @@ import Confirm from '@/components/Confirm.vue'
 import { useConfirm, useConfirmKey } from '@/composables/useConfirm'
 
 export default defineComponent({
+  props: {
+    flash: Object
+  },
+
   components: {
     Sidebar,
     Logo,
@@ -97,11 +102,19 @@ export default defineComponent({
     Confirm
   },
 
-  setup() {
+  setup(props) {
+    const { flash } = toRefs(props)
     const sidebar = ref(null)
     const confirm = useConfirm()
 
     provide(useConfirmKey, confirm.confirm)
+    const notyf: any = inject('notyf')
+
+    watch(flash!, (value) => {
+      if (value?.success) {
+        notyf.success(value.success)
+      }
+    })
 
     return {
       sidebar,

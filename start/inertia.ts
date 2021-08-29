@@ -20,6 +20,6 @@ Inertia.share({
   },
 
   flash: (ctx) => {
-    return ctx.session.flashMessages.get('message')
+    return ctx.session.flashMessages.all()
   }
 });

@@ -3,7 +3,9 @@ import VueCompositionAPI from '@vue/composition-api'
 import { createInertiaApp } from '@inertiajs/inertia-vue'
 import { InertiaProgress } from '@inertiajs/progress'
 import vuetify from './plugins/vuetify'
+import { Notyf } from 'notyf'
 
+import 'notyf/notyf.min.css'
 import '../scss/app.scss'
 
 import Layout from './Layout.vue'
@@ -26,6 +28,26 @@ createInertiaApp({
 
   setup({ el, app, props }) {
     new Vue({
+      provide: () => {
+        return {
+          notyf: new Notyf({
+            position: { y: 'top', x: 'center'},
+            duration: 6000,
+            dismissible: true,
+            types: [
+              {
+                type: 'success',
+                background: '#333',
+                icon: {
+                  className: 'mdi mdi-check',
+                  tagName: 'i',
+                  color: '#07d85b',
+                }
+              }
+            ]
+          })
+        }
+      },
       render: h => h(app, props),
       vuetify
     }).$mount(el)

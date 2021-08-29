@@ -18,7 +18,10 @@ export default class UsersController {
 
     await User.create(data)
 
-    response.redirect().back()
+    response
+      .flash({ success: `User ${data.username} has been created` })
+      .redirect()
+      .back()
   }
 
   public async show ({}: HttpContextContract) {
@@ -30,6 +33,19 @@ export default class UsersController {
   public async update ({}: HttpContextContract) {
   }
 
-  public async destroy ({}: HttpContextContract) {
+  public async destroy ({ params, response }: HttpContextContract) {
+    console.log(params)
+    // const user = await User.findOrFail(params.id)
+    // await user.delete()
+    console.log('user deleted')
+
+    try {
+      console.log('res')
+      response
+        .flash({ success: 'The user has correctly been deleted' })
+        .redirect('/users')
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
