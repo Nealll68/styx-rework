@@ -58,9 +58,11 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from '@vue/composition-api'
+import { injectStrict } from '@/composables/injectStrict'
 import CreateUser from '@/components/CreateUser.vue'
 
 import { UserInterface } from '@/interfaces/user'
+import { useConfirmKey } from '@/composables/useConfirm'
 
 export default defineComponent({
   props: {
@@ -80,8 +82,15 @@ export default defineComponent({
       { text: '', value: 'actions', sortable: false }
     ]
 
-    const deleteUser = (user: UserInterface) => {
-      console.log(user)
+    const confirm = injectStrict(useConfirmKey)
+
+    const deleteUser = async (user: UserInterface) => {
+      const confirmed = await confirm({
+        title: 'Delete user?',
+        message: 'This action is ireversible'
+      })
+
+      console.log(confirmed, user)
       // this.$inertia.delete(`/users/${user.id}`, user)
     }
 

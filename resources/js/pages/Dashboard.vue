@@ -18,10 +18,6 @@ export default defineComponent({
 
   props: {
     auth: Object as PropType<UserInterface>
-  },
-
-  setup(props) {
-    console.log(props)
-  },
+  }
 })
 </script>

@@ -66,26 +66,47 @@
         <slot/>
       </v-container>
     </v-main>
+
+    <confirm 
+      :value="confirm.show.value" 
+      :type="confirm.componentProps.type"
+      :title="confirm.componentProps.title"
+      :message="confirm.componentProps.message"
+      :continueBtnText="confirm.componentProps.continueBtnText"
+      :cancelBtnText="confirm.componentProps.cancelBtnText"
+      @confirmed="confirm.inform($event)"
+    />
   </v-app>
 </template>
 
 <script lang="ts">
+import { defineComponent, provide, ref } from '@vue/composition-api'
+
 import Logo from '@/components/Logo.vue'
 import Sidebar from '@/components/Sidebar.vue'
 import ServerControls from '@/components/ServerControls.vue'
-import { defineComponent } from '@vue/composition-api'
+import Confirm from '@/components/Confirm.vue'
+
+import { useConfirm, useConfirmKey } from '@/composables/useConfirm'
 
 export default defineComponent({
   components: {
     Sidebar,
     Logo,
-    ServerControls
+    ServerControls,
+    Confirm
   },
 
-  data () {
+  setup() {
+    const sidebar = ref(null)
+    const confirm = useConfirm()
+
+    provide(useConfirmKey, confirm.confirm)
+
     return {
-      sidebar: null
+      sidebar,
+      confirm
     }
-  },
+  }
 })
 </script>
