@@ -77,6 +77,14 @@ export default defineComponent({
       type: String,
       required: false,
       default: 'Cancel'
+    },
+    confirmFunction: {
+      type: Function,
+      required: false
+    },
+    cancelFunction: {
+      type: Function,
+      required: false
     }
   },
 
