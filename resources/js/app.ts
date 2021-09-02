@@ -34,17 +34,17 @@ createInertiaApp({
             position: { y: 'top', x: 'center'},
             duration: 6000,
             dismissible: true,
-            types: [
-              {
-                type: 'success',
-                background: '#333',
-                icon: {
-                  className: 'mdi mdi-check',
-                  tagName: 'i',
-                  color: '#07d85b',
-                }
-              }
-            ]
+            // types: [
+            //   {
+            //     type: 'success',
+            //     background: '#333',
+            //     icon: {
+            //       className: 'mdi mdi-check',
+            //       tagName: 'i',
+            //       color: '#07d85b',
+            //     }
+            //   }
+            // ]
           })
         }
       },
