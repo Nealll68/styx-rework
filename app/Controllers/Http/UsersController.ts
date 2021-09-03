@@ -34,18 +34,24 @@ export default class UsersController {
   }
 
   public async destroy ({ params, response }: HttpContextContract) {
-    console.log(params)
-    // const user = await User.findOrFail(params.id)
-    // await user.delete()
-    console.log('user deleted')
+    const user = await User.findOrFail(params.id)
 
-    try {
-      console.log('res')
-      response
-        .flash({ success: 'The user has correctly been deleted' })
-        .redirect('/users')
-    } catch (e) {
-      console.log(e)
+    if (user.admin) {
+      const adminAccounts = await User
+        .query()
+        .where('admin', true)
+
+      if (adminAccounts.length === 1) {
+        return response
+          .flash({ error: 'The application needs at least one admin account to properly work' })
+          .redirect('/users')    
+      }
     }
+    
+    await user.delete()
+
+    response
+      .flash({ success: 'The user has correctly been deleted' })
+      .redirect('/users')
   }
 }
