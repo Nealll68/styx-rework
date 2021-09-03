@@ -51,19 +51,6 @@
 
     <v-main>
       <v-container fluid>
-        <!-- <v-snackbar
-          v-if="$page.props.flash && $page.props.flash.success"
-          app
-          top
-          right
-          :value="$page.props.flash.success"
-          :timeout="6000"
-          class="snack-success"
-        >
-          <v-icon left color="success">mdi-check</v-icon>
-          <span v-html="$page.props.flash.success"></span>
-        </v-snackbar> -->
-
         <slot/>
       </v-container>
     </v-main>
@@ -113,6 +100,8 @@ export default defineComponent({
     watch(flash!, (value) => {
       if (value?.success) {
         notyf.success(value.success)
+      } else if (value?.error) {
+        notyf.error(value.error)
       }
     })
 
