@@ -54,7 +54,7 @@
                     color="primary"
                     block
                     :disabled="!formValid"
-                    :loading="false"
+                    :loading="loading"
                   >Sign in</v-btn>
                 </v-card-actions>
               </v-form>
@@ -89,10 +89,14 @@ export default defineComponent({
     })
     const formValid = ref(false)
     const showPassword = ref(false)
+    const loading = ref(false)
 
     function login (): void {
       if (formValid) {
-        Inertia.post('/login', form)        
+        Inertia.post('/login', form, {
+          onStart: () => loading.value = true,
+          onFinish: () => loading.value = false
+        })        
       }
     }
 
@@ -102,6 +106,7 @@ export default defineComponent({
       formValid,
       showPassword,
       login,
+      loading
     }
   }
 })
