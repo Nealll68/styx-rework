@@ -1,9 +1,19 @@
 <template>
   <v-dialog
-    v-model="value"
+    v-model="dialog"
     max-width="600px"
-    @input="closeDialog"
   >
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn
+        text
+        small
+        v-on="on"
+        v-bind="attrs"
+      >
+        <v-icon left>mdi-account-remove</v-icon>Edit
+      </v-btn>
+    </template>
+    
     <v-card>
       <v-card-title>
         <v-icon left>mdi-account-plus-outline</v-icon> Edit user
@@ -12,16 +22,16 @@
       <v-form @submit.prevent="update" ref="editUserForm">              
         <v-card-text>
           <v-text-field
-            v-model="user.username"
+            v-model="editForm.username"
             outlined
             label="Username"
             :rules="rules.username"
-            :error-messages="$page.props.errors && $page.props.errors.username"
+            :error-messages="editForm.errors && editForm.errors.username"
             :counter="30"
           ></v-text-field>
 
           <v-switch
-            v-model="user.admin"
+            v-model="editForm.admin"
             label="Administrator"
             color="error"
             class="mt-0"
@@ -33,13 +43,13 @@
             type="submit"
             color="primary"
             width="40%"
-            :loading="loading"
+            :loading="editForm.processing"
           >Validate</v-btn>
 
           <v-btn
             text
             width="40%"
-            @click="closeDialog"
+            @click="dialog = !dialog"
           >Cancel</v-btn>
         </v-card-actions>
       </v-form>
@@ -48,54 +58,50 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, reactive, ref, toRefs } from "@vue/composition-api"
+import { defineComponent, PropType, reactive, ref } from "@vue/composition-api"
 import { usernameRules } from '@/rules'
 import { UserInterface } from "@/interfaces/user"
-import { Inertia } from "@inertiajs/inertia"
+import useForm from "@/composables/useForm"
 
 export default defineComponent({
   props: {
-    value: {
-      type: Boolean,
-      required: true
-    },
     user:  {
       type: Object as PropType<UserInterface>,
       required: true
     }
   },
 
-  setup (props, { emit }) {
-    const { user } = toRefs(props)
+  setup ({ user }) {
+    const dialog = ref(false)
     const showPassword = ref(false)
-    const loading = ref(false)
     const editUserForm: any = ref(null)
+    const editForm = useForm({
+      username: user.username,
+      admin: user.admin
+    })
+
     const rules = reactive({
       username: usernameRules,
     })
 
     const update = async () => {
       if (editUserForm.value.validate()) {
-        Inertia.put(`/users/${user.value.id}`, {
-          onStart: () => loading.value = true,
-          onSuccess: () => closeDialog,
-          onFinish: () => loading.value = false
-        })        
+        editForm.put(`/users/${user.id}`, {
+          onSuccess: () => {
+            editForm.reset()
+            dialog.value = false
+          }
+        })
       }      
-    }
-
-    const closeDialog = () => {
-      editUserForm.value.resetValidation()
-      emit('input', false)
     }
 
     return {
       showPassword,
       editUserForm,
-      loading,
       rules,
       update,
-      closeDialog
+      editForm,
+      dialog
     }
   }
 })

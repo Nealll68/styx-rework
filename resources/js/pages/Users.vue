@@ -42,14 +42,9 @@
           </template>
 
           <template v-slot:[`item.actions`]="{ item }" v-if="auth.admin">
-            <v-btn
-              text
-              small
-              :disabled="usersLoading"
-              @click="editUser(item)"
-            >
-              <v-icon left>mdi-account-remove</v-icon>Edit
-            </v-btn>
+            <edit-user 
+              :user="item"
+            />
 
             <v-btn
               text
@@ -64,11 +59,6 @@
         </v-data-table>
       </v-card-text>
     </v-card>
-
-    <edit-user
-      v-model="showEditUser"
-      :user="editedUser"
-    />
   </section>
 </template>
 
