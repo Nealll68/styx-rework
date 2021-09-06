@@ -9,10 +9,6 @@ export default class UsersController {
     })
   }
 
-  public async create ({ request }: HttpContextContract) {
-   console.log(request.all()) 
-  }
-
   public async store ({ request, response }: HttpContextContract) {
     const data = await request.validate(UserValidator)
 
@@ -22,15 +18,34 @@ export default class UsersController {
       .flash({ success: `User ${data.username} has been created` })
       .redirect()
       .back()
-  }
+  }  
 
-  public async show ({}: HttpContextContract) {
-  }
+  public async update ({ params, request, response }: HttpContextContract) {    
+    const data = await request.validate(UserValidator)    
+    const user = await User.findOrFail(params.id)
 
-  public async edit ({}: HttpContextContract) {
-  }
+    if (user.admin && !data.admin) {
+      const adminAccounts = await User
+        .query()
+        .where('admin', true)
 
-  public async update ({}: HttpContextContract) {
+      if (adminAccounts.length === 1) {
+        return response
+          .flash({ error: 'The application needs at least one admin account to properly work' })
+          .redirect('/users')    
+      }
+    }
+
+    await user
+      .merge({
+        username: data.username,
+        admin: data.admin
+      })
+      .save()
+
+    response
+      .flash({ success: `The user ${user.username} has correctly been updated` })
+      .redirect('/users')
   }
 
   public async destroy ({ params, response }: HttpContextContract) {
@@ -51,7 +66,7 @@ export default class UsersController {
     await user.delete()
 
     response
-      .flash({ success: 'The user has correctly been deleted' })
+      .flash({ success: `The user ${user.username} has correctly been deleted` })
       .redirect('/users')
   }
 }

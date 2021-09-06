@@ -27,10 +27,14 @@ Route.post('login', 'AuthController.login')
 Route.group(() => {
   Route.get('logout', 'AuthController.logout')
 
-  Route.inertia('/', 'Dashboard')
-
-  // Route.inertia('/users', 'Users')
-  Route.resource('users', 'UsersController')
+  Route.inertia('/', 'Dashboard', {})
+  
+  Route.resource('users', 'UsersController').only([
+    'index',
+    'store',
+    'update',
+    'destroy'
+  ])
 }).middleware('auth')
 
 // Route.group(() => {

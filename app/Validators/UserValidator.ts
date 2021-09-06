@@ -32,7 +32,9 @@ export default class UserValidator {
       })
     ]),
 
-    password: schema.string()
+    password: schema.string(),
+
+    admin: schema.boolean()
   })
 
 	/**

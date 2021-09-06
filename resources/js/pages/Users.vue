@@ -45,6 +45,15 @@
             <v-btn
               text
               small
+              :disabled="usersLoading"
+              @click="editUser(item)"
+            >
+              <v-icon left>mdi-account-remove</v-icon>Edit
+            </v-btn>
+
+            <v-btn
+              text
+              small
               color="error"
               :disabled="usersLoading"
               @click="deleteUser(item)"
@@ -55,17 +64,25 @@
         </v-data-table>
       </v-card-text>
     </v-card>
+
+    <edit-user
+      v-model="showEditUser"
+      :user="editedUser"
+    />
   </section>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api'
+import { Inertia } from '@inertiajs/inertia'
+
 import { injectStrict } from '@/composables/injectStrict'
-import CreateUser from '@/components/CreateUser.vue'
+import { useConfirmKey } from '@/composables/useConfirm'
+
+import CreateUser from '@/components/Users/CreateUser.vue'
+import EditUser from '@/components/Users/EditUser.vue'
 
 import { UserInterface } from '@/interfaces/user'
-import { useConfirmKey } from '@/composables/useConfirm'
-import { Inertia } from '@inertiajs/inertia'
 
 export default defineComponent({
   props: {
@@ -74,7 +91,8 @@ export default defineComponent({
   },
 
   components: {
-    CreateUser
+    CreateUser,
+    EditUser
   },
 
   setup () {
@@ -86,7 +104,15 @@ export default defineComponent({
     ]
     const usersLoading = ref(false)
 
+    const showEditUser = ref(false)
+    const editedUser = ref<UserInterface | {}>({})
+
     const confirm = injectStrict(useConfirmKey)
+
+    const editUser = (user: UserInterface) => {
+      editedUser.value = user
+      showEditUser.value = true
+    }
 
     const deleteUser = async (user: UserInterface) => {
       const confirmed = await confirm({
@@ -105,6 +131,9 @@ export default defineComponent({
     return {
       headers,
       usersLoading,
+      editedUser,
+      showEditUser,
+      editUser,
       deleteUser
     }
   }
