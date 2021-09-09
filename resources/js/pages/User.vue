@@ -6,14 +6,14 @@
           <v-icon left>mdi-account-edit</v-icon> Edit my account
         </v-card-title>
 
-        <v-form @submit.prevent="update()" ref="updateUserForm">              
+        <v-form @submit.prevent="update" ref="updateUserForm">              
           <v-card-text>
             <v-text-field
               v-model="form.username"
               outlined
               label="Username"
               :rules="rules.username"
-              :error-messages="form.errors.username"
+              :error-messages="form.errors && form.errors.username"
             ></v-text-field>
 
             <v-text-field
@@ -23,7 +23,7 @@
               :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
               :type="showPassword ? 'text' : 'password'"
               :rules="form.password ? rules.password : []"
-              :error-messages="form.errors.password"
+              :error-messages="form.errors && form.errors.password"
               @click:append="showPassword = !showPassword"
             ></v-text-field>
           </v-card-text>
@@ -31,10 +31,10 @@
           <v-card-actions>
             <v-btn 
               block
-              color="accent"
+              color="primary"
               type="submit" 
+              :disabled="!form.isDirty"
               :loading="form.processing"
-              @click="update()"
             >Update</v-btn>
           </v-card-actions>
         </v-form>
@@ -43,44 +43,45 @@
   </v-row>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import useForm from "@/composables/useForm"
+import { UserInterface } from "@/interfaces/user"
+import { passwordRules, usernameRules } from "@/rules"
+import { defineComponent, PropType, reactive, ref } from "@vue/composition-api"
+
+export default defineComponent({
   props: {
-    errors: Object,
-    authUser: Object
-  },
-
-  data () {
-    return {
-      form: this.$inertia.form({
-        id: this.authUser.id,
-        username: this.authUser.username,
-        password: null
-      }),
-      showPassword: false,
-
-      rules: {
-        username: [
-          v => !!v || 'Required',
-          v => (v || '').length <= 30 || 'Maximum 30 characters authorized'
-        ],
-        password: [
-          v => (v || '').length >= 8 || 'Minimum 8 characters required',
-          v => /^(?=.*[a-z])/.test(v) || 'Must contain at least 1 lowercase character',
-          v => /^(?=.*[A-Z])/.test(v) || 'Must contain at least 1 uppercase character',
-          v => /^(?=.*[0-9])/.test(v) || 'Must contain at least 1 numeric character',
-          v => /(?=.*?[#?!@$%^&*-])/.test(v) || 'Must contain at least 1 special character'
-        ],
-      }
+    auth: {
+      type: Object as PropType<UserInterface>,
+      required: true
     }
   },
 
-  methods: {
-    update () {
-      if (this.$refs.updateUserForm.validate()) {
-        this.form.put(`/users/${this.form.id}`, this.form)
-      }
+  setup ({ auth }) {
+    const updateUserForm: any = ref(null)
+    const showPassword = ref(false)
+    const form = useForm({
+      username: auth.username,
+      password: null
+    })
+    const rules = reactive({
+      username: usernameRules,
+      password: passwordRules
+    })
+
+    const update = () => {
+      if (updateUserForm.value.validate()) {
+        form.put(`/user/${auth.id}`)
+      }     
+    }
+
+    return {
+      updateUserForm,
+      form,
+      rules,
+      showPassword,
+      update
     }
   }
-}
+})
 </script>

@@ -14,7 +14,7 @@
             color="primary"
             block
             depressed
-            @click="$inertia.visit('/users/show')"
+            @click="$inertia.visit('/user')"
             class="mb-2"
           >
             <v-icon left>mdi-account</v-icon>

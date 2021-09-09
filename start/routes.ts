@@ -28,6 +28,8 @@ Route.group(() => {
   Route.get('logout', 'AuthController.logout')
 
   Route.inertia('/', 'Dashboard', {})
+  Route.inertia('user', 'User', {})
+  Route.put('user/:id','AuthController.update')
   
   Route.resource('users', 'UsersController').only([
     'index',

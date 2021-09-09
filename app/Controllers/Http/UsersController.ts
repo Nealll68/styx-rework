@@ -1,6 +1,7 @@
 import User from 'App/Models/User';
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import UserValidator from 'App/Validators/UserValidator';
+import CreateValidator from 'App/Validators/User/CreateValidator';
+import EditValidator from 'App/Validators/User/EditValidator';
 
 export default class UsersController {
   public async index ({ inertia }: HttpContextContract) {
@@ -10,7 +11,7 @@ export default class UsersController {
   }
 
   public async store ({ request, response }: HttpContextContract) {
-    const data = await request.validate(UserValidator)
+    const data = await request.validate(CreateValidator)
 
     await User.create(data)
 
@@ -20,8 +21,8 @@ export default class UsersController {
       .back()
   }  
 
-  public async update ({ params, request, response }: HttpContextContract) {    
-    const data = await request.validate(UserValidator)    
+  public async update ({ params, request, response }: HttpContextContract) {
+    const data = await request.validate(EditValidator)
     const user = await User.findOrFail(params.id)
 
     if (user.admin && !data.admin) {
@@ -31,10 +32,14 @@ export default class UsersController {
 
       if (adminAccounts.length === 1) {
         return response
-          .flash({ error: 'The application needs at least one admin account to properly work' })
+          .flash({
+            errors: {
+              admin: ['This user is the last with administrator permissions. The application needs at least one admin account to properly work. Please create another admin user if you want to remove admin permission from this user']
+            }  
+          })
           .redirect('/users')    
       }
-    }
+    } 
 
     await user
       .merge({

@@ -32,6 +32,7 @@
 
           <v-switch
             v-model="editForm.admin"
+            :error-messages="editForm.errors && editForm.errors.admin"
             label="Administrator"
             color="error"
             class="mt-0"
@@ -81,10 +82,10 @@ export default defineComponent({
     })
 
     const rules = reactive({
-      username: usernameRules,
+      username: usernameRules
     })
 
-    const update = async () => {
+    const update = () => {
       if (editUserForm.value.validate()) {
         editForm.put(`/users/${user.id}`, {
           onSuccess: () => {
