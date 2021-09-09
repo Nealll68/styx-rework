@@ -4,7 +4,11 @@ import CreateValidator from 'App/Validators/User/CreateValidator';
 import EditValidator from 'App/Validators/User/EditValidator';
 
 export default class UsersController {
-  public async index ({ inertia }: HttpContextContract) {
+  public async index ({ bouncer, inertia }: HttpContextContract) {
+    await bouncer
+      .with('UserPolicy')
+      .authorize('view')
+
     return inertia.render('Users', {
       users: await User.all()
     })
