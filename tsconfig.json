@@ -41,7 +41,8 @@
       "@adonisjs/shield",
       "@adonisjs/auth",
       "@eidellev/inertia-adonisjs",
-      "adonis5-cache"
+      "adonis5-cache",
+      "@adonisjs/bouncer"
     ]
   }
 }
