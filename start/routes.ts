@@ -31,12 +31,18 @@ Route.group(() => {
   Route.inertia('user', 'User', {})
   Route.put('user/:id','AuthController.update')
   
-  Route.resource('users', 'UsersController').only([
-    'index',
-    'store',
-    'update',
-    'destroy'
-  ])
+  Route
+    .resource('users', 'UsersController')
+    .only([
+      'index',
+      'store',
+      'update',
+      'destroy'
+    ])
+    .middleware({
+      '*': ['admin']
+    })
+
 }).middleware('auth')
 
 // Route.group(() => {
