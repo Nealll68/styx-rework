@@ -5,7 +5,8 @@
     "@adonisjs/core/build/commands",
     "@adonisjs/repl/build/commands",
     "@adonisjs/lucid/build/commands",
-    "@adonisjs/bouncer/build/commands"
+    "@adonisjs/bouncer/build/commands",
+    "@eidellev/inertia-adonisjs/build/commands"
   ],
   "exceptionHandlerNamespace": "App/Exceptions/Handler",
   "aliases": {
@@ -19,9 +20,7 @@
     "./start/kernel",
     {
       "file": "./start/inertia",
-      "environment": [
-        "web"
-      ]
+      "environment": ["web"]
     },
     "./start/bouncer"
   ],
@@ -33,14 +32,12 @@
     "@adonisjs/session",
     "@adonisjs/shield",
     "@adonisjs/auth",
-    "@eidellev/inertia-adonisjs",
     "adonis5-cache",
-    "./providers/ViteProvider",
-    "@adonisjs/bouncer"
+    "@adonisjs/bouncer",
+    "@91codes/adonis-vite",
+    "@eidellev/inertia-adonisjs"
   ],
-  "aceProviders": [
-    "@adonisjs/repl"
-  ],
+  "aceProviders": ["@adonisjs/repl"],
   "metaFiles": [
     {
       "pattern": "public/**",
