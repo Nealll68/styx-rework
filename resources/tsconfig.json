@@ -9,6 +9,9 @@
     // this enables stricter inference for data properties on `this`
     "strict": true,
     "jsx": "preserve",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "isolatedModules": true,
+
+    "types": ["vue/macros-global", "element-plus/global"]
   }
 }

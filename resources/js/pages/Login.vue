@@ -1,10 +1,8 @@
 <template>
   <h1>Login</h1>
-  <h2>{{ name }}</h2>
+  <ElButton>{{ name }}</ElButton>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
-
-const name = ref("Nealll");
+const name = $ref("Nealll");
 </script>
