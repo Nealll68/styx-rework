@@ -1,4 +1,4 @@
-import { ViteAssetLoaderContract } from 'contracts/vite';
+import { ViteAssetLoaderContract } from 'contracts/vite'
 import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import ViteAssetLoader from 'App/Services/ViteAssetLoader'
 
@@ -22,7 +22,7 @@ export default class ViteProvider {
     if (Env.get('NODE_ENV') === 'production') {
       assets = await this.assetLoader.assetProd()
     }
-    
+
     View.global('assets', (): string => assets)
   }
 

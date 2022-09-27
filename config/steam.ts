@@ -16,14 +16,14 @@ const steamConfig: SteamConfigInterface = {
    */
   account: {
     username: '',
-    password: ''
+    password: '',
   },
 
   /**
    * Steam guard
    * ? Set this variable to true if the registered account use Steam Guard
    */
-  guard: false
+  guard: false,
 
 }
 

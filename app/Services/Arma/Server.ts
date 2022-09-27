@@ -11,12 +11,10 @@ import Parameter from 'App/Models/Parameter'
 import ServerExecutableMissingException from 'App/Exceptions/ServerExecutableMissingException'
 
 class ArmaServer {
-
   private _server: ChildProcess
   private _profileBasePath = process.platform === 'win32'
     ? join(Config.get('arma.basePath'), 'styx')
     : join('~', '.local', 'share', 'Arma 3 - Other Profiles')
-  
 
   /**
    * Method to start Arma 3 server with verification and appropriates startup
@@ -26,11 +24,12 @@ class ArmaServer {
    * @param parameters Server startup parameter taken from database
    */
   public async start (name: string, parameters: Parameter): Promise<void> {
-    if (!await this.checkServerExecutable())
+    if (!await this.checkServerExecutable()) {
       throw new ServerExecutableMissingException()
+    }
 
     this._server = spawn(
-      join(Config.get('arma.basePath'), this.getExecutableName()), 
+      join(Config.get('arma.basePath'), this.getExecutableName()),
       this.startupParameters(name, parameters)
     )
 
@@ -52,16 +51,16 @@ class ArmaServer {
    */
   private getExecutableName (): string {
     const executables: object = {
-      "win32": {
-          "arma3server": "arma3server.exe",
-          "arma3server_x64": "arma3server_x64.exe"
+      'win32': {
+        'arma3server': 'arma3server.exe',
+        'arma3server_x64': 'arma3server_x64.exe',
       },
-      "linux": {
-          "arma3server": "arma3server",
-          "arma3server_x64": "arma3server"
-      }
+      'linux': {
+        'arma3server': 'arma3server',
+        'arma3server_x64': 'arma3server',
+      },
     }
-  
+
     return executables[process.platform][Config.get('arma.x64') ? 'arma3server_x64' : 'arma3server']
   }
 
@@ -84,34 +83,36 @@ class ArmaServer {
    * @param name Profile name
    * @param parameters Server startup parameter 
    */
-  private startupParameters(name: string, parameters: Parameter): string[] {
+  private startupParameters (name: string, parameters: Parameter): string[] {
     let startupParameters = [
       `-port=${parameters.port}`,
       `-name=${name}`,
-      `-config=${join(this._profileBasePath, name, 'server.cfg')}`
+      `-config=${join(this._profileBasePath, name, 'server.cfg')}`,
     ]
 
-    if (process.platform === 'win32') 
+    if (process.platform === 'win32') {
       startupParameters = [...startupParameters, `-profiles="${join(this._profileBasePath, name)}"`]
+    }
 
-    if (parameters.mod)
+    if (parameters.mod) {
       startupParameters = [...startupParameters, `-mod="${parameters.mod}"`]
-    else if (parameters.serverMod)
+    } else if (parameters.serverMod) {
       startupParameters = [...startupParameters, `-serverMod="${parameters.serverMod}"`]
-    else if (parameters.customCfg)
-      startupParameters = [...startupParameters, `-cfg="${join(this._profileBasePath, name, 'basic.cfg')}`]    
-    else if (parameters.autoInit)
+    } else if (parameters.customCfg) {
+      startupParameters = [...startupParameters, `-cfg="${join(this._profileBasePath, name, 'basic.cfg')}`]
+    } else if (parameters.autoInit) {
       startupParameters = [...startupParameters, '-autoInit']
-    else if (parameters.loadMissionToMemory)
-      startupParameters = [...startupParameters, '-loadMissionToMemory'] 
-    else if (parameters.noLogs)
-      startupParameters = [...startupParameters, '-noLogs'] 
-    else if (parameters.enableHt)
+    } else if (parameters.loadMissionToMemory) {
+      startupParameters = [...startupParameters, '-loadMissionToMemory']
+    } else if (parameters.noLogs) {
+      startupParameters = [...startupParameters, '-noLogs']
+    } else if (parameters.enableHt) {
       startupParameters = [...startupParameters, '-enableHT']
-    else if (parameters.hugePages)
-      startupParameters = [...startupParameters, '-hugepages'] 
-    else if (parameters.filePatching)
-      startupParameters = [...startupParameters, '-filePatching'] 
+    } else if (parameters.hugePages) {
+      startupParameters = [...startupParameters, '-hugepages']
+    } else if (parameters.filePatching) {
+      startupParameters = [...startupParameters, '-filePatching']
+    }
 
     return startupParameters
   }

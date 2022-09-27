@@ -16,8 +16,8 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 export default class FailedToInstallException extends Exception {
   constructor () {
     super(
-      'The application failed to install for some reason. Reasons include: you do not own the application, you do not have enough hard drive space, a network error occurred, or the application is not available for your selected platform.', 
-      500, 
+      'The application failed to install for some reason. Reasons include: you do not own the application, you do not have enough hard drive space, a network error occurred, or the application is not available for your selected platform.',
+      500,
       'E_STEAM_FAILED_TO_INSTALL'
     )
   }
@@ -27,7 +27,7 @@ export default class FailedToInstallException extends Exception {
       .status(error.status)
       .json({
         code: error.code,
-        message: error.message
+        message: error.message,
       })
   }
 }

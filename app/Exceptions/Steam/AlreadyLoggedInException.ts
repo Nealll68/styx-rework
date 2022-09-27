@@ -23,7 +23,7 @@ export default class AlreadyLoggedInException extends Exception {
       .status(error.status)
       .json({
         code: error.code,
-        message: error.message
+        message: error.message,
       })
   }
 }

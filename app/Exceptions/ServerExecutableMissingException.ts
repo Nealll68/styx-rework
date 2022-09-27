@@ -1,7 +1,6 @@
 import { Exception } from '@poppinss/utils'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-
 /*
 |--------------------------------------------------------------------------
 | Exception
@@ -24,7 +23,7 @@ export default class ServerExecutableMissingException extends Exception {
       .status(error.status)
       .json({
         code: error.code,
-        message: error.message
+        message: error.message,
       })
   }
 }

@@ -8,7 +8,6 @@ import ProfileValidator from 'App/Validators/ProfileValidator'
 import ArmaProfile from 'App/Services/Arma/Profile'
 
 export default class ProfilesController {
-
   /**
    * Return all profiles in database
    */
@@ -25,11 +24,11 @@ export default class ProfilesController {
 
     const profile = await Profile.create({
       name,
-      isDefault
+      isDefault,
     })
 
     await Parameter.create({
-      profileId: profile.id
+      profileId: profile.id,
     })
 
     await ArmaProfile.create(name)
@@ -64,7 +63,7 @@ export default class ProfilesController {
     }
 
     const profile = await Profile.findOrFail(params.id)
-    
+
     profile.isDefault = isDefault
 
     await profile.save()

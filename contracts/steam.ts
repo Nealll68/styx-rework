@@ -5,7 +5,7 @@ export interface SteamAccountInterface {
 }
 
 export interface SteamConfigInterface {
- path: string,
- account: SteamAccountInterface,
- guard: boolean
+  path: string,
+  account: SteamAccountInterface,
+  guard: boolean
 }

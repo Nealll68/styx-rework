@@ -12,7 +12,7 @@ const ArmaConfig: ArmaConfigInterface = {
    * Use x64 executable
    * ? x64 executable is actually not supported by Arma 3 on Linux system
    */
-  x64: true
+  x64: true,
 }
 
 export default ArmaConfig

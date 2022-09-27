@@ -30,46 +30,45 @@ Route.group(() => {
   Route.inertia('/', 'Dashboard', {})
   Route.inertia('user', 'User', {})
   Route.put('user/:id','AuthController.update')
-  
+
   Route
     .resource('users', 'UsersController')
     .only([
       'index',
       'store',
       'update',
-      'destroy'
+      'destroy',
     ])
     .middleware({
-      '*': ['admin']
+      '*': ['admin'],
     })
-
 }).middleware('auth')
 
 // Route.group(() => {
 
 //   Route.post('register', 'AuthController.register')
 //   Route.post('login', 'AuthController.login')
-  
+
 //   Route.get('/steam/cancel', async () => {
 //     SteamConsole.cancel()
 //   })
-  
+
 //   Route
 //     .resource('/profile', 'ProfilesController')
 //     .apiOnly()
-  
+
 //   Route.patch('/parameter/:id', 'ParametersController.update')
-  
+
 //   Route.group(() => {
 //     Route.get('/start', 'ArmaController.start')
 //     Route.get('/stop', 'ArmaController.stop')
 //     Route.get('/restart', 'ArmaController.restart')
 //     Route.patch('/update', 'ArmaController.update')
 //   }).prefix('/server')
-  
+
 //   Route.group(() => {
 //     Route.get('/:profile/:file', 'FilesController.show')
 //     Route.put('/:profile/:file', 'FilesController.update')
 //   }).prefix('/file')
-  
+
 // }).prefix('/api')

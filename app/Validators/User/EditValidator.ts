@@ -6,26 +6,26 @@ export default class EditValidator {
   }
 
   public refs = schema.refs({
-    id: this.ctx.params.id
+    id: this.ctx.params.id,
   })
-	
+
   public schema = schema.create({
     username: schema.string({}, [
       rules.unique({
         table: 'users',
         column: 'username',
         whereNot: {
-          id: this.refs.id
-        }
-      })
+          id: this.refs.id,
+        },
+      }),
     ]),
 
     password: schema.string.optional(),
 
-    admin: schema.boolean.optional()
+    admin: schema.boolean.optional(),
   })
-	
+
   public messages = {
-    'username.unique': 'This username is already in use'
+    'username.unique': 'This username is already in use',
   }
 }

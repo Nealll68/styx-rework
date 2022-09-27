@@ -3,7 +3,6 @@ import Parameter from 'App/Models/Parameter'
 import ParameterValidator from 'App/Validators/ParameterValidator'
 
 export default class ParametersController {
-
   /**
    * Update parameters 
    * @param HttpContext 
@@ -20,5 +19,4 @@ export default class ParametersController {
       .status(201)
       .json(parameters)
   }
-
 }

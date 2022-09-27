@@ -17,7 +17,7 @@ export default class User extends BaseModel {
   public password: string
 
   @column({
-    serialize: (value: number) => Boolean(value)
+    serialize: (value: number) => Boolean(value),
   })
   public admin: boolean
 

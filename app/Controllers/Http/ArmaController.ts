@@ -6,20 +6,18 @@ import Profile from 'App/Models/Profile'
 
 import { promisify } from 'util'
 
-
 export default class ArmaController {
-
   private _delay = promisify(setTimeout)
 
   /**
    * Start Arma 3 server
-   * 
+   *
    * @param HttpContext
    */
-  async start ({ response }: HttpContextContract) {
+  public async start({ response }: HttpContextContract) {
     const profile = await Profile.findByOrFail('isDefault', true)
     await profile.preload('parameter')
-    
+
     await ArmaServer.start(profile.name, profile.parameter)
 
     response.status(204)
@@ -27,10 +25,10 @@ export default class ArmaController {
 
   /**
    * Stop Arma 3 server
-   * 
+   *
    * @param HttpContext
    */
-  async stop ({ response }: HttpContextContract) {
+  public async stop({ response }: HttpContextContract) {
     ArmaServer.stop()
 
     response.status(204)
@@ -38,10 +36,10 @@ export default class ArmaController {
 
   /**
    * Restart Arma 3 server
-   * 
+   *
    * @param HttpContext
    */
-  async restart ({ response }: HttpContextContract) {
+  public async restart({ response }: HttpContextContract) {
     ArmaServer.stop()
 
     const profile = await Profile.findByOrFail('isDefault', true)
@@ -58,12 +56,11 @@ export default class ArmaController {
    * Update Arma 3 server
    * @param HttpContext
    */
-  async update ({ request, response }: HttpContextContract) {
+  public async update({ request, response }: HttpContextContract) {
     const payload = request.all()
 
     await SteamConsole.updateArma(payload)
-    
+
     response.status(204)
   }
-
 }

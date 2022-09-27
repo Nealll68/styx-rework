@@ -6,7 +6,9 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "dev": "node ace serve --watch",
-    "vite": "vite"
+    "vite": "vite",
+    "lint": "eslint . --ext=.ts",
+    "lint:fix": "eslint . --ext=.ts --fix"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.2",
@@ -14,6 +16,8 @@
     "@vitejs/plugin-vue": "^3.1.0",
     "adonis-preset-ts": "^2.1.0",
     "deepmerge": "^4.2.2",
+    "eslint": "^8.24.0",
+    "eslint-plugin-adonis": "^2.1.1",
     "pino-pretty": "^5.1.0",
     "postcss": "^8.4.16",
     "sass": "^1.55.0",
@@ -54,5 +58,21 @@
     "sqlite3": "^5.0.2",
     "steamcmd-interface": "^3.0.0",
     "vue": "^3.2.39"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:adonis/typescriptApp"
+    ],
+    "rules": {
+      "max-len": 0,
+      "@typescript-eslint/space-before-function-paren": "off"
+    }
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "semi": false,
+    "singleQuote": true,
+    "quoteProps": "consistent",
+    "bracketSpacing": true
   }
 }

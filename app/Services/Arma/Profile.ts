@@ -2,13 +2,13 @@ import Config from '@ioc:Adonis/Core/Config'
 import Application from '@ioc:Adonis/Core/Application'
 
 import { constants } from 'fs'
-import { 
-  copyFile, 
+import {
+  copyFile,
   mkdir,
   access,
   readFile,
   writeFile,
-  rm
+  rm,
 } from 'fs/promises'
 import { join } from 'path'
 
@@ -19,7 +19,6 @@ import { join } from 'path'
  * ?  Difficulty: <Arma_folder>/styx/<profileName>/Users/<profileName>/<profileName>.Arma3Profile
  */
 class ArmaProfile {
-  
   private _profileBasePath = process.platform === 'win32'
     ? join(Config.get('arma.basePath'), 'styx')
     : join('~', '.local', 'share', 'Arma 3 - Other Profiles')
@@ -38,7 +37,7 @@ class ArmaProfile {
         await mkdir(join(this._profileBasePath, name, 'Users', name), { recursive: true })
       }
     })
-    
+
     // Create all config files related to the profile
     await copyFile(join(templateFolderPath, 'serverConfig.template'), join(this._profileBasePath, name, 'server.cfg'))
     await copyFile(join(templateFolderPath, 'serverBasic.template'), join(this._profileBasePath, name, 'basic.cfg'))
@@ -82,7 +81,6 @@ class ArmaProfile {
   public async delete (name: string): Promise<void> {
     await rm(join(this._profileBasePath, name), { recursive: true })
   }
-
 }
 
 export default new ArmaProfile()

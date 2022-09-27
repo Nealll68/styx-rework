@@ -11,8 +11,8 @@ Ws.start((socket) => {
         socket.emit('updateArmaError', {
           status,
           code,
-          message
-        })  
+          message,
+        })
       })
   })
 

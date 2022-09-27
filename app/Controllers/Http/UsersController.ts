@@ -1,12 +1,12 @@
-import User from 'App/Models/User';
+import User from 'App/Models/User'
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import CreateValidator from 'App/Validators/User/CreateValidator';
-import EditValidator from 'App/Validators/User/EditValidator';
+import CreateValidator from 'App/Validators/User/CreateValidator'
+import EditValidator from 'App/Validators/User/EditValidator'
 
 export default class UsersController {
   public async index ({ inertia }: HttpContextContract) {
     return inertia.render('Users', {
-      users: await User.all()
+      users: await User.all(),
     })
   }
 
@@ -19,7 +19,7 @@ export default class UsersController {
       .flash({ success: `User ${data.username} has been created` })
       .redirect()
       .back()
-  }  
+  }
 
   public async update ({ params, request, response }: HttpContextContract) {
     const data = await request.validate(EditValidator)
@@ -34,17 +34,17 @@ export default class UsersController {
         return response
           .flash({
             errors: {
-              admin: ['This user is the last with administrator permissions. The application needs at least one admin account to properly work. Please create another admin user if you want to remove admin permission from this user']
-            }  
+              admin: ['This user is the last with administrator permissions. The application needs at least one admin account to properly work. Please create another admin user if you want to remove admin permission from this user'],
+            },
           })
-          .redirect('/users')    
+          .redirect('/users')
       }
-    } 
+    }
 
     await user
       .merge({
         username: data.username,
-        admin: data.admin
+        admin: data.admin,
       })
       .save()
 
@@ -64,10 +64,10 @@ export default class UsersController {
       if (adminAccounts.length === 1) {
         return response
           .flash({ error: 'The application needs at least one admin account to properly work' })
-          .redirect('/users')    
+          .redirect('/users')
       }
     }
-    
+
     await user.delete()
 
     response

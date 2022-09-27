@@ -1,6 +1,6 @@
 export default interface ViteConfigInterface {
   dev: boolean,
-  manifestPath: string,  
+  manifestPath: string,
   devUrl: string,
   mainUrl: string
 }

@@ -5,7 +5,7 @@ export default class ParamaterValidator {
   constructor (protected ctx: HttpContextContract) {
   }
 
-	/*
+  /*
 	 * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
 	 *
 	 * For example:
@@ -28,8 +28,8 @@ export default class ParamaterValidator {
     profileId: schema.number.optional([
       rules.unique({
         table: 'parameters',
-        column: 'profile_id'
-      })
+        column: 'profile_id',
+      }),
     ]),
 
     port: schema.number.optional(),
@@ -43,10 +43,10 @@ export default class ParamaterValidator {
     noLogs: schema.boolean.optional(),
     enableHt: schema.boolean.optional(),
     hugePages: schema.boolean.optional(),
-    filePatching: schema.boolean.optional()
+    filePatching: schema.boolean.optional(),
   })
 
-	/**
+  /**
 	 * Custom messages for validation failures. You can make use of dot notation `(.)`
 	 * for targeting nested fields and array expressions `(*)` for targeting all
 	 * children of an array. For example:

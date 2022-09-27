@@ -8,7 +8,7 @@ class Ws {
 
   public start (callback: (socket: Socket) => void): void {
     this.io = new Server(AdonisServer.instance!, {
-      cors: corsConfig
+      cors: corsConfig,
     })
 
     this.io.on('connection', callback)

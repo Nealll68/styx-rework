@@ -5,7 +5,7 @@ export default class Admin {
     if (auth.isLoggedIn && !auth.user?.admin) {
       return response.unauthorized()
     }
-    
+
     await next()
   }
 }

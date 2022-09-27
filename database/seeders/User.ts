@@ -1,4 +1,4 @@
-import User from 'App/Models/User';
+import User from 'App/Models/User'
 import BaseSeeder from '@ioc:Adonis/Lucid/Seeder'
 
 export default class UserSeeder extends BaseSeeder {
@@ -6,7 +6,7 @@ export default class UserSeeder extends BaseSeeder {
     await User.create({
       username: 'admin',
       password: 'admin',
-      admin: true
+      admin: true,
     })
   }
 }
