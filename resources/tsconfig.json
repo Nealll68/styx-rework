@@ -1,9 +1,10 @@
 {
-  "include": ["js/*"],
+  "include": ["js/**/*", "js/**/*.vue"],
 
   "exclude": [],
 
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "esnext",
     "module": "esnext",
     // this enables stricter inference for data properties on `this`
@@ -12,6 +13,10 @@
     "moduleResolution": "node",
     "isolatedModules": true,
 
-    "types": ["vue/macros-global", "element-plus/global"]
+    "types": ["vue/macros-global", "element-plus/global"],
+
+    "paths": {
+      "@/*": ["./js/*"]
+    }
   }
 }
