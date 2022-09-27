@@ -8,16 +8,21 @@
     "dev": "node ace serve --watch",
     "vite": "vite",
     "lint": "eslint . --ext=.ts",
-    "lint:fix": "eslint . --ext=.ts --fix"
+    "lint:fix": "eslint . --ext=.ts --fix",
+    "lint:vue": "eslint ./resources/js --ext .ts,vue"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.2",
     "@types/node": "^16.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "@vitejs/plugin-vue": "^3.1.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
     "adonis-preset-ts": "^2.1.0",
     "deepmerge": "^4.2.2",
     "eslint": "^8.24.0",
     "eslint-plugin-adonis": "^2.1.1",
+    "eslint-plugin-vue": "^9.5.1",
     "pino-pretty": "^5.1.0",
     "postcss": "^8.4.16",
     "sass": "^1.55.0",
