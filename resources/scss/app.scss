@@ -1,9 +1,27 @@
-@import url('https://css.gg/css?=user|password|lock');
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+@import url('https://css.gg/css?=user|password|lock|home|user-list|log-out');
+
+:root {
+  --ggs: 0.8;
+}
+
+html,
+body,
+#app,
+.page-container {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   font-family: 'Roboto', sans-serif;
+  background: url(/black_lozenge.png) repeat;
+  margin: 0;
 }
 
-.gg-lock {
-  --ggs: 0.8;
-}
+// .gg-lock,
+// .gg-home,
+// .gg-user-list,
+// .gg-log-out {
+//   --ggs: 0.8;
+// }

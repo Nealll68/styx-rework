@@ -3,11 +3,11 @@ import User from 'App/Models/User'
 import EditValidator from 'App/Validators/User/EditValidator'
 
 export default class AuthController {
-  public async index ({ inertia }: HttpContextContract) {
+  public async index({ inertia }: HttpContextContract) {
     return inertia.render('LoginPage')
   }
 
-  public async update ({ params, request, response }: HttpContextContract) {
+  public async update({ params, request, response }: HttpContextContract) {
     const data = await request.validate(EditValidator)
     const user = await User.findOrFail(params.id)
 
@@ -24,7 +24,7 @@ export default class AuthController {
       .redirect('/user')
   }
 
-  public async login ({
+  public async login({
     request,
     auth,
     response,
@@ -37,14 +37,14 @@ export default class AuthController {
       response.redirect('/')
     } catch {
       session.flash('errors', {
-        credentials:
+        username:
           'The provided credentials do not match with existings accounts',
       })
       response.redirect().back()
     }
   }
 
-  public async logout ({ auth, response }: HttpContextContract) {
+  public async logout({ auth, response }: HttpContextContract) {
     await auth.logout()
 
     response.redirect('/login')

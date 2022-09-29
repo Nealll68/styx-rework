@@ -11,7 +11,6 @@
 import Inertia from '@ioc:EidelLev/Inertia'
 
 Inertia.share({
-  errors: (ctx) => {
-    return ctx.session.flashMessages.get('errors')
-  },
+  errors: (ctx) => ctx.session.flashMessages.get('errors'),
+  user: (ctx) => ctx.auth.user,
 })

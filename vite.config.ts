@@ -14,7 +14,19 @@ export default defineConfig({
         find: '@',
         replacement: resolve(__dirname, './resources/js'),
       },
+      {
+        find: '~',
+        replacement: resolve(__dirname, './resources'),
+      },
     ],
+  },
+
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "~/scss/element/index.scss" as *;`,
+      },
+    },
   },
 
   plugins: [
@@ -24,9 +36,16 @@ export default defineConfig({
     adonis({ input: 'resources/js/app.ts' }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
+      dts: 'js/auto-imports.d.ts',
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      dirs: ['js/components'],
+      resolvers: [
+        ElementPlusResolver({
+          importStyle: 'sass',
+        }),
+      ],
+      dts: 'js/components.d.ts',
     }),
   ],
 
