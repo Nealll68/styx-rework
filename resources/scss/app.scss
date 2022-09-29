@@ -1,21 +1,27 @@
-.v-main__wrap {
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+@import url('https://css.gg/css?=user|password|lock|home|user-list|log-out');
+
+:root {
+  --ggs: 0.8;
+}
+
+html,
+body,
+#app,
+.page-container {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
   background: url(/black_lozenge.png) repeat;
+  margin: 0;
 }
 
-.theme--dark.v-data-table>.v-data-table__wrapper>table>tbody>tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
-  background: #333;
-}
-
-.stripe {
-  background: repeating-linear-gradient(
-    -55deg,
-    #222,
-    #222 10px,
-    #333 10px,
-    #333 20px
-  );
-}
-
-.notyf__toast {
-  font-family: Roboto,sans-serif;
-}
+// .gg-lock,
+// .gg-home,
+// .gg-user-list,
+// .gg-log-out {
+//   --ggs: 0.8;
+// }
