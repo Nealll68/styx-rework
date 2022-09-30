@@ -3,29 +3,41 @@
     <el-col :span="3">
       <aside class="side-nav__container">
         <div class="side-nav__logo">
-          <styx-logo width="60px" height="60px" />
+          <styx-logo
+            width="60px"
+            height="60px"
+          />
         </div>
 
         <el-menu class="side-nav">
           <el-menu-item index="1">
-            <el-icon><i class="gg-home"></i></el-icon>
+            <el-icon><i class="gg-home" /></el-icon>
             <span>Dashboard</span>
           </el-menu-item>
 
           <el-menu-item index="2">
-            <el-icon><i class="gg-user-list"></i></el-icon>
+            <el-icon><i class="gg-user-list" /></el-icon>
             <span>Users</span>
           </el-menu-item>
         </el-menu>
 
         <div class="side-nav__bottom">
-          <el-button class="side-nav__button" size="large" text>
+          <el-button
+            class="side-nav__button"
+            size="large"
+            text
+          >
             {{ user.username }}
           </el-button>
 
-          <el-button class="side-nav__button" type="danger" size="large" text>
+          <el-button
+            class="side-nav__button"
+            type="danger"
+            size="large"
+            text
+          >
             <el-icon class="el-icon--left">
-              <i class="gg-log-out"></i>
+              <i class="gg-log-out" />
             </el-icon>
             Logout
           </el-button>
@@ -36,7 +48,12 @@
     <el-col :span="21">
       <el-row class="page-header__container">
         <header class="page-header">
-          <el-tag v-if="user.admin" type="danger">Administrator</el-tag>
+          <el-tag
+            v-if="user.admin"
+            type="danger"
+          >
+            Administrator
+          </el-tag>
         </header>
       </el-row>
 

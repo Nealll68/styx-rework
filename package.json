@@ -9,7 +9,8 @@
     "vite": "vite",
     "lint": "eslint . --ext=.ts",
     "lint:fix": "eslint . --ext=.ts --fix",
-    "lint:vue": "eslint ./resources/js --ext .ts,vue"
+    "lint:vue": "eslint ./resources/js --ext .ts,vue",
+    "lint:fix:vue": "eslint ./resources/js --ext .ts,vue --fix"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.9.2",
@@ -78,6 +79,7 @@
     "semi": false,
     "singleQuote": true,
     "quoteProps": "consistent",
-    "bracketSpacing": true
+    "bracketSpacing": true,
+    "singleAttributePerLine": true
   }
 }
