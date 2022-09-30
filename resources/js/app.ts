@@ -1,7 +1,10 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
 
+import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
 import '../scss/app.scss'
+
 import PageLayout from './PageLayout.vue'
 
 import { library } from '@fortawesome/fontawesome-svg-core'

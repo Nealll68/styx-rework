@@ -1,14 +1,8 @@
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
 
-@import url('https://css.gg/css?=user|password|lock|home|user-list|log-out|user-add');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-:root {
-  --ggs: 0.8;
-}
 
 html,
 body,
@@ -27,4 +21,8 @@ body {
 .page-container .el-card {
   border: none;
   box-shadow: var(--el-box-shadow-lighter) !important;
+}
+
+.page-container .el-dialog .el-dialog__header {
+  text-align: left;
 }
