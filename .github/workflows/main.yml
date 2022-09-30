@@ -16,5 +16,7 @@ jobs:
         with:
           version: 6.11.0
           run_install: true      
-      - name: Run linter
+      - name: Run adonis linter
         run: npm run lint
+      - name: Run vue linter
+        run: npm run lint:vue
