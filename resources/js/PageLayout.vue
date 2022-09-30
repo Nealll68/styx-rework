@@ -11,12 +11,16 @@
 
         <el-menu class="side-nav">
           <el-menu-item index="1">
-            <el-icon><i class="gg-home" /></el-icon>
+            <el-icon>
+              <font-awesome-icon icon="fa-solid fa-house-fire" />
+            </el-icon>
             <span>Dashboard</span>
           </el-menu-item>
 
           <el-menu-item index="2">
-            <el-icon><i class="gg-user-list" /></el-icon>
+            <el-icon>
+              <font-awesome-icon icon="fa-solid fa-users" />
+            </el-icon>
             <span>Users</span>
           </el-menu-item>
         </el-menu>
@@ -37,7 +41,7 @@
             text
           >
             <el-icon class="el-icon--left">
-              <i class="gg-log-out" />
+              <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
             </el-icon>
             Logout
           </el-button>
@@ -89,6 +93,10 @@ $bgColor: #1d1e1f;
 .side-nav__logo {
   text-align: center;
   margin: 15px 0;
+
+  svg {
+    display: inline-block;
+  }
 }
 
 .side-nav__bottom {
@@ -128,6 +136,6 @@ $bgColor: #1d1e1f;
 }
 
 .page-container {
-  padding: 50px 20px 0 20px;
+  padding: 70px 20px 0 20px;
 }
 </style>
