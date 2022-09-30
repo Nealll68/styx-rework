@@ -11,12 +11,10 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2      
       - uses: pnpm/action-setup@v2.2.2
         with:
           version: 6.11.0
           run_install: true      
-      - name: Install packages
-        run: npm ci
       - name: Run linter
         run: npm run lint
