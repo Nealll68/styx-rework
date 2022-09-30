@@ -2,13 +2,13 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
 
 import '../scss/app.scss'
-import Layout from './Layout.vue'
+import PageLayout from './PageLayout.vue'
 
 createInertiaApp({
   resolve: (name) =>
     import(`./pages/${name}.vue`).then((module) => {
       if (name !== 'LoginPage') {
-        module.default.layout = module.default.layout || Layout
+        module.default.layout = module.default.layout || PageLayout
       }
 
       return module.default

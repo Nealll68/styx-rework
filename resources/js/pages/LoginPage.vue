@@ -1,10 +1,16 @@
 <template>
-  <el-row class="login-row" justify="center">
+  <el-row
+    class="login-row"
+    justify="center"
+  >
     <el-col :span="6">
       <el-card>
         <template #header>
           <div class="login-card__header">
-            <styx-logo width="70px" height="70px" />
+            <styx-logo
+              width="70px"
+              height="70px"
+            />
           </div>
         </template>
 
@@ -15,7 +21,11 @@
           show-icon
         />
 
-        <el-form ref="ruleFormRef" :model="loginForm" :rules="rules">
+        <el-form
+          ref="ruleFormRef"
+          :model="loginForm"
+          :rules="rules"
+        >
           <el-form-item prop="username">
             <el-input
               v-model="loginForm.username"
@@ -23,7 +33,7 @@
               placeholder="Username"
             >
               <template #prepend>
-                <i class="gg-user"></i>
+                <i class="gg-user" />
               </template>
             </el-input>
           </el-form-item>
@@ -37,7 +47,7 @@
               show-password
             >
               <template #prepend>
-                <i class="gg-lock"></i>
+                <i class="gg-lock" />
               </template>
             </el-input>
           </el-form-item>
@@ -56,10 +66,11 @@
               type="primary"
               plain
               size="large"
-              @click="submitForm"
               :loading="loginForm.processing"
-              >Login</el-button
+              @click="submitForm"
             >
+              Login
+            </el-button>
           </el-form-item>
         </el-form>
       </el-card>
@@ -86,7 +97,7 @@ const rules: FormRules = {
 const submitForm = async () => {
   if (!ruleFormRef) return
 
-  await ruleFormRef.validate((valid, fields) => {
+  await ruleFormRef.validate((valid) => {
     if (valid) {
       loginForm.post('/login')
     }
