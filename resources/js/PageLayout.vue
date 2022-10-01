@@ -39,6 +39,7 @@
             type="danger"
             size="large"
             text
+            @click="logout"
           >
             <el-icon class="el-icon--left">
               <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
@@ -69,10 +70,15 @@
 </template>
 
 <script lang="ts" setup>
+import { Inertia } from '@inertiajs/inertia'
 import { usePage } from '@inertiajs/inertia-vue3'
 import type { UserInterface } from './interfaces/user'
 
 const user = $computed(() => usePage().props.value.user as UserInterface)
+
+const logout = () => {
+  Inertia.get('/logout')
+}
 </script>
 
 <style lang="scss" scoped>
