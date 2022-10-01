@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/inertia-vue3'
+import { InertiaProgress } from '@inertiajs/progress'
 
 import 'element-plus/es/components/message/style/css'
 import 'element-plus/es/components/message-box/style/css'
@@ -26,6 +27,11 @@ library.add(
   faLock,
   faArrowRightFromBracket
 )
+
+InertiaProgress.init({
+  color: '#6072ab',
+  showSpinner: true,
+})
 
 createInertiaApp({
   resolve: (name) =>
