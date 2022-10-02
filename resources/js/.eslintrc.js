@@ -12,4 +12,8 @@ module.exports = {
     $customRef: 'readonly',
     $toRef: 'readonly',
   },
+  rules: {
+    'no-undef': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
+  },
 }

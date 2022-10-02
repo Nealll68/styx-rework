@@ -55,8 +55,9 @@
           type="primary"
           :loading="addUserForm.processing"
           @click="submitForm"
-          >Confirm</el-button
         >
+          Confirm
+        </el-button>
       </span>
     </template>
   </el-dialog>

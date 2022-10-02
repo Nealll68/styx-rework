@@ -145,6 +145,6 @@ const deleteUser = (user: UserInterface) => {
         },
       })
     })
-    .catch(() => {})
+    .catch(() => false)
 }
 </script>
