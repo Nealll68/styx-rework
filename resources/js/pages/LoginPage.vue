@@ -33,7 +33,7 @@
               placeholder="Username"
             >
               <template #prepend>
-                <i class="gg-user" />
+                <font-awesome-icon icon="fa-solid fa-user" />
               </template>
             </el-input>
           </el-form-item>
@@ -47,7 +47,7 @@
               show-password
             >
               <template #prepend>
-                <i class="gg-lock" />
+                <font-awesome-icon icon="fa-solid fa-lock" />
               </template>
             </el-input>
           </el-form-item>

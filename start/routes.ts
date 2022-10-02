@@ -28,7 +28,7 @@ Route.group(() => {
   Route.get('logout', 'AuthController.logout')
 
   Route.inertia('/', 'DashboardPage', {})
-  Route.inertia('user', 'User', {})
+  Route.inertia('user', 'UserPage', {})
   Route.put('user/:id', 'AuthController.update')
 
   Route.resource('users', 'UsersController')

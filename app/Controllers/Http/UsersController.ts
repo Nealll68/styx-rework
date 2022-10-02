@@ -4,13 +4,13 @@ import CreateValidator from 'App/Validators/User/CreateValidator'
 import EditValidator from 'App/Validators/User/EditValidator'
 
 export default class UsersController {
-  public async index ({ inertia }: HttpContextContract) {
-    return inertia.render('Users', {
+  public async index({ inertia }: HttpContextContract) {
+    return inertia.render('UsersPage', {
       users: await User.all(),
     })
   }
 
-  public async store ({ request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     const data = await request.validate(CreateValidator)
 
     await User.create(data)
@@ -21,20 +21,19 @@ export default class UsersController {
       .back()
   }
 
-  public async update ({ params, request, response }: HttpContextContract) {
+  public async update({ params, request, response }: HttpContextContract) {
     const data = await request.validate(EditValidator)
     const user = await User.findOrFail(params.id)
 
     if (user.admin && !data.admin) {
-      const adminAccounts = await User
-        .query()
-        .where('admin', true)
+      const adminAccounts = await User.query().where('admin', true)
 
       if (adminAccounts.length === 1) {
         return response
           .flash({
             errors: {
-              admin: ['This user is the last with administrator permissions. The application needs at least one admin account to properly work. Please create another admin user if you want to remove admin permission from this user'],
+              message:
+                'This user is the last with administrator permissions. The application needs at least one admin account to properly work. Please create another admin user if you want to remove admin permission from this user',
             },
           })
           .redirect('/users')
@@ -49,21 +48,26 @@ export default class UsersController {
       .save()
 
     response
-      .flash({ success: `The user ${user.username} has correctly been updated` })
+      .flash({
+        success: `The user ${user.username} has correctly been updated`,
+      })
       .redirect('/users')
   }
 
-  public async destroy ({ params, response }: HttpContextContract) {
+  public async destroy({ params, response }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
 
     if (user.admin) {
-      const adminAccounts = await User
-        .query()
-        .where('admin', true)
+      const adminAccounts = await User.query().where('admin', true)
 
       if (adminAccounts.length === 1) {
         return response
-          .flash({ error: 'The application needs at least one admin account to properly work' })
+          .flash({
+            errors: {
+              message:
+                'The application needs at least one admin account to properly work',
+            },
+          })
           .redirect('/users')
       }
     }
@@ -71,7 +75,9 @@ export default class UsersController {
     await user.delete()
 
     response
-      .flash({ success: `The user ${user.username} has correctly been deleted` })
+      .flash({
+        success: `The user ${user.username} has correctly been deleted`,
+      })
       .redirect('/users')
   }
 }

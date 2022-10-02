@@ -46,7 +46,11 @@ defineProps<{
 }>()
 </script>
 
-<style>
+<style lang="scss" scoped>
+svg {
+  display: inline-block;
+}
+
 .path {
   fill-opacity: 0;
   stroke: #6072ab;
