@@ -72,15 +72,26 @@
     </el-col>
 
     <el-col :span="21">
-      <el-row class="page-header__container">
-        <header class="page-header z-10">
+      <el-row
+        class="page-header z-10"
+        justify="space-between"
+        tag="header"
+      >
+        <el-col :span="4">
           <el-tag
             v-if="user.admin"
             type="danger"
           >
             Administrator
           </el-tag>
-        </header>
+        </el-col>
+
+        <el-col
+          class="text-right"
+          :span="6"
+        >
+          <arma-server-controls />
+        </el-col>
       </el-row>
 
       <el-row class="page-container">
@@ -95,6 +106,7 @@
 <script lang="ts" setup>
 import { Link as InertiaLink } from '@inertiajs/inertia-vue3'
 import type { UserInterface } from './interfaces/user'
+import ArmaServerControls from './components/ArmaServerControls.vue'
 
 defineProps<{
   user: UserInterface
@@ -143,11 +155,12 @@ $bgColor: #1d1e1f;
 
 .page-header {
   position: fixed;
+  left: 12.5%;
+  right: 0;
 
   display: flex;
   align-items: center;
 
-  width: 100%;
   height: 50px;
   padding: 0 20px;
 
