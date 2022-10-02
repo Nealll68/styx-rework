@@ -9,50 +9,62 @@
           />
         </div>
 
-        <el-menu class="side-nav">
-          <el-menu-item index="1">
-            <el-icon>
-              <font-awesome-icon icon="fa-solid fa-house-fire" />
-            </el-icon>
-            <span>Dashboard</span>
-          </el-menu-item>
+        <el-menu
+          class="side-nav"
+          :default-active="$page.url"
+        >
+          <inertia-link href="/">
+            <el-menu-item index="/">
+              <el-icon>
+                <font-awesome-icon icon="fa-solid fa-house-fire" />
+              </el-icon>
+              <span>Dashboard</span>
+            </el-menu-item>
+          </inertia-link>
 
-          <el-menu-item index="2">
-            <el-icon>
-              <font-awesome-icon icon="fa-solid fa-users" />
-            </el-icon>
-            <span>Users</span>
-          </el-menu-item>
+          <inertia-link href="/users">
+            <el-menu-item index="/users">
+              <el-icon>
+                <font-awesome-icon icon="fa-solid fa-users" />
+              </el-icon>
+              <span>Users</span>
+            </el-menu-item>
+          </inertia-link>
         </el-menu>
 
         <div class="side-nav__bottom">
-          <el-button
-            class="side-nav__button"
-            size="large"
-            text
-          >
-            {{ user.username }}
-          </el-button>
+          <inertia-link href="/user">
+            <el-button
+              class="side-nav__button"
+              size="large"
+              text
+            >
+              {{ user.username }}
+            </el-button>
+          </inertia-link>
 
-          <el-button
-            class="side-nav__button"
-            type="danger"
-            size="large"
-            text
-            @click="logout"
-          >
-            <el-icon class="el-icon--left">
-              <font-awesome-icon icon="fa-solid fa-arrow-right-from-bracket" />
-            </el-icon>
-            Logout
-          </el-button>
+          <inertia-link href="/logout">
+            <el-button
+              class="side-nav__button"
+              type="danger"
+              size="large"
+              text
+            >
+              <el-icon class="el-icon--left">
+                <font-awesome-icon
+                  icon="fa-solid fa-arrow-right-from-bracket"
+                />
+              </el-icon>
+              Logout
+            </el-button>
+          </inertia-link>
         </div>
       </aside>
     </el-col>
 
     <el-col :span="21">
       <el-row class="page-header__container">
-        <header class="page-header">
+        <header class="page-header z-10">
           <el-tag
             v-if="user.admin"
             type="danger"
@@ -63,22 +75,21 @@
       </el-row>
 
       <el-row class="page-container">
-        <slot />
+        <el-col>
+          <slot />
+        </el-col>
       </el-row>
     </el-col>
   </el-row>
 </template>
 
 <script lang="ts" setup>
-import { Inertia } from '@inertiajs/inertia'
-import { usePage } from '@inertiajs/inertia-vue3'
+import { Link as InertiaLink } from '@inertiajs/inertia-vue3'
 import type { UserInterface } from './interfaces/user'
 
-const user = $computed(() => usePage().props.value.user as UserInterface)
-
-const logout = () => {
-  Inertia.get('/logout')
-}
+defineProps<{
+  user: UserInterface
+}>()
 </script>
 
 <style lang="scss" scoped>
@@ -119,10 +130,6 @@ $bgColor: #1d1e1f;
   &:last-child {
     margin-left: 0;
   }
-}
-
-.page-header__container {
-  position: static;
 }
 
 .page-header {
