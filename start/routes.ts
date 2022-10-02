@@ -31,6 +31,9 @@ Route.group(() => {
   Route.inertia('user', 'UserPage', {})
   Route.put('user/:id', 'AuthController.update')
 
+  Route.get('/configuration', 'ConfigurationsController.index')
+  Route.post('/configuration', 'ConfigurationsController.update')
+
   Route.resource('users', 'UsersController')
     .only(['index', 'store', 'update', 'destroy'])
     .middleware({
