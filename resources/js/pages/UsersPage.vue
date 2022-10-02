@@ -93,7 +93,6 @@ const lastAdmin = $computed(
 const { dayjs } = useDate()
 
 const updateAdmin = (user: UserInterface, admin: boolean) => {
-  console.log('update role', user, admin)
   Inertia.put(
     `/users/${user.id}`,
     {
