@@ -30,6 +30,15 @@
               <span>Users</span>
             </el-menu-item>
           </inertia-link>
+
+          <inertia-link href="/configuration">
+            <el-menu-item index="/configuration">
+              <el-icon>
+                <font-awesome-icon icon="fa-solid fa-gear" />
+              </el-icon>
+              <span>Configuration</span>
+            </el-menu-item>
+          </inertia-link>
         </el-menu>
 
         <div class="side-nav__bottom">
