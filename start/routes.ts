@@ -34,6 +34,14 @@ Route.group(() => {
   Route.get('/configuration', 'ConfigurationsController.index')
   Route.post('/configuration', 'ConfigurationsController.update')
 
+  Route.resource('profiles', 'ProfilesController').only([
+    'index',
+    'show',
+    'store',
+    'update',
+    'destroy',
+  ])
+
   Route.resource('users', 'UsersController')
     .only(['index', 'store', 'update', 'destroy'])
     .middleware({

@@ -11,49 +11,90 @@ export default class ProfilesController {
   /**
    * Return all profiles in database
    */
-  public async index () {
-    return await Profile.all()
+  public async index({ inertia }: HttpContextContract) {
+    return inertia.render('ProfilePage', {
+      profiles: await Profile.all(),
+    })
   }
 
   /**
    * Create a new profile and create the associated Arma 3 server startup parameters
-   * @param HttpContext 
+   * @param HttpContext
    */
-  public async store ({ request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     const { name, isDefault } = await request.validate(ProfileValidator)
+
+    const profileExists = await Profile.first()
+
+    if (!profileExists) {
+      const profile = await Profile.create({
+        name,
+        isDefault,
+      })
+
+      return response
+        .flash({ success: `The profile ${profile.name} has been created` })
+        .redirect(`/profiles/${profile.id}`)
+    }
+
+    if (isDefault) {
+      const defaultProfile = await Profile.findBy('isDefault', true)
+      if (defaultProfile) {
+        defaultProfile.isDefault = false
+        await defaultProfile.save()
+      }
+    }
 
     const profile = await Profile.create({
       name,
       isDefault,
     })
 
-    await Parameter.create({
-      profileId: profile.id,
-    })
+    // await Parameter.create({
+    //   profileId: profile.id,
+    // })
 
-    await ArmaProfile.create(name)
+    // await ArmaProfile.create(name)
 
     response
-      .status(201)
-      .json(profile)
+      .flash({ success: `The profile ${profile.name} has been created` })
+      .redirect(`/profiles/${profile.id}`)
   }
 
   /**
    * Return profile based on ID
-   * @param HttpContext 
+   * @param HttpContext
    */
-  public async show ({ params }: HttpContextContract) {
-    const profile = await Profile.findOrFail(params.id)
-    await profile.preload('parameter')
+  public async show({ params, inertia }: HttpContextContract) {
+    const profiles = await Profile.all()
 
-    return profile
+    if (profiles.length === 0) {
+      return inertia.render('ProfilePage', {
+        profiles: [],
+        profile: null,
+      })
+    }
+
+    if (params.id === 'default') {
+      const profile = profiles.find((profile) => profile.isDefault)
+      return inertia.render('ProfilePage', {
+        profiles: profiles,
+        profile: profile,
+      })
+    }
+
+    const profile = profiles.find((profile) => profile.id === params.id)
+    return inertia.render('ProfilePage', {
+      profiles: profiles,
+      profile: profile,
+    })
   }
 
   /**
    * Update profile with new data
-   * @param HttpContext 
+   * @param HttpContext
    */
-  public async update ({ params, request, response }: HttpContextContract) {
+  public async update({ params, request, response }: HttpContextContract) {
     const { isDefault } = request.all()
 
     if (isDefault) {
@@ -68,16 +109,14 @@ export default class ProfilesController {
 
     await profile.save()
 
-    response
-      .status(201)
-      .json(profile)
+    response.status(201).json(profile)
   }
 
   /**
    * Delete profile and associated Arma 3 server startup parameters
-   * @param HttpContext 
+   * @param HttpContext
    */
-  public async destroy ({ params, response }: HttpContextContract) {
+  public async destroy({ params, response }: HttpContextContract) {
     const profile = await Profile.findOrFail(params.id)
     const parameters = await Parameter.findByOrFail('profile_id', profile.id)
 

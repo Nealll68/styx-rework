@@ -22,6 +22,15 @@
             </el-menu-item>
           </inertia-link>
 
+          <inertia-link href="/profiles/default">
+            <el-menu-item index="/profiles/">
+              <el-icon>
+                <font-awesome-icon icon="fa-solid fa-folder-open" />
+              </el-icon>
+              <span>Profiles</span>
+            </el-menu-item>
+          </inertia-link>
+
           <inertia-link href="/users">
             <el-menu-item index="/users">
               <el-icon>

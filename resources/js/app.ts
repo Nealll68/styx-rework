@@ -18,6 +18,11 @@ import {
   faLock,
   faArrowRightFromBracket,
   faGear,
+  faFolderOpen,
+  faChevronDown,
+  faStar,
+  faTrash,
+  faFileCirclePlus,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -27,7 +32,12 @@ library.add(
   faUser,
   faLock,
   faArrowRightFromBracket,
-  faGear
+  faGear,
+  faFolderOpen,
+  faChevronDown,
+  faStar,
+  faTrash,
+  faFileCirclePlus
 )
 
 InertiaProgress.init({
