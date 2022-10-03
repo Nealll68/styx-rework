@@ -39,6 +39,15 @@ Route.group(() => {
     .middleware({
       '*': ['admin'],
     })
+
+  Route.group(() => {
+    Route.group(() => {
+      Route.get('/start', 'ArmaController.start')
+      Route.get('/stop', 'ArmaController.stop')
+      Route.get('/restart', 'ArmaController.restart')
+      Route.patch('/update', 'ArmaController.update')
+    }).prefix('/server')
+  }).prefix('/api')
 }).middleware('auth')
 
 // Route.group(() => {

@@ -2,6 +2,7 @@
   <el-button
     type="success"
     plain
+    @click="startServer"
   >
     <el-icon class="el-icon--left">
       <font-awesome-icon icon="fa-solid fa-play" />
@@ -29,3 +30,10 @@
     Stop
   </el-button>
 </template>
+
+<script lang="ts" setup>
+const startServer = async () => {
+  const response = await fetch('/server/start')
+  console.log(response)
+}
+</script>
