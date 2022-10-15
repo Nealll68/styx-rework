@@ -8,7 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AddUserDialog: typeof import('./components/AddUserDialog.vue')['default']
+    ConfigurationTab: typeof import('./components/Profile/ConfigurationTab.vue')['default']
     CreateProfileDialog: typeof import('./components/CreateProfileDialog.vue')['default']
+    DifficultyTab: typeof import('./components/Profile/DifficultyTab.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
@@ -22,10 +25,22 @@ declare module '@vue/runtime-core' {
     ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
+    ElLink: typeof import('element-plus/es')['ElLink']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElRow: typeof import('element-plus/es')['ElRow']
+    ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
+    ElSwitch: typeof import('element-plus/es')['ElSwitch']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElTabPane: typeof import('element-plus/es')['ElTabPane']
+    ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ParametersTab: typeof import('./components/Profile/ParametersTab.vue')['default']
+    ParametersTabs: typeof import('./components/Profile/ParametersTabs.vue')['default']
+    PerformanceTab: typeof import('./components/Profile/PerformanceTab.vue')['default']
+    ProfilePageHeader: typeof import('./components/ProfilePageHeader.vue')['default']
+    ProfileTabs: typeof import('./components/Profile/ProfileTabs.vue')['default']
     StyxLogo: typeof import('./components/StyxLogo.vue')['default']
   }
 }

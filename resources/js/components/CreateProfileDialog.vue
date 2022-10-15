@@ -20,6 +20,7 @@
       ref="ruleFormRef"
       :model="addProfileForm"
       :rules="rules"
+      @submit.prevent="submitForm"
     >
       <el-form-item prop="name">
         <el-input
@@ -29,7 +30,10 @@
         />
       </el-form-item>
 
-      <el-form-item>
+      <el-form-item
+        v-if="profiles.length > 0"
+        class="!mb-0"
+      >
         <el-checkbox
           v-model="addProfileForm.isDefault"
           label="Set as default"
@@ -57,7 +61,7 @@
 <script lang="ts" setup>
 import { useForm } from '@inertiajs/inertia-vue3'
 import type { ProfileInterface } from '@/interfaces'
-import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage, FormInstance, FormRules } from 'element-plus'
 
 const props = defineProps<{
   profiles: ProfileInterface[]
@@ -69,7 +73,7 @@ let dialog = $ref(false)
 const ruleFormRef = $ref<FormInstance>()
 const addProfileForm = useForm({
   name: '',
-  isDefault: false,
+  isDefault: props.profiles.length === 0,
 })
 
 const checkName = (
@@ -103,7 +107,19 @@ const submitForm = async () => {
     if (valid) {
       addProfileForm.post('/profiles', {
         preserveScroll: true,
-        onSuccess: () => (dialog = false),
+        onSuccess: () => {
+          dialog = false
+          addProfileForm.name = ''
+        },
+        onError: (errors) => {
+          ElMessage.error({
+            message: errors.message,
+            duration: 10000,
+            showClose: true,
+          })
+          dialog = false
+          addProfileForm.name = ''
+        },
       })
     }
   })

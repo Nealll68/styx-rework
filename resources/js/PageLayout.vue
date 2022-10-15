@@ -22,8 +22,8 @@
             </el-menu-item>
           </inertia-link>
 
-          <inertia-link href="/profiles/default">
-            <el-menu-item index="/profiles/">
+          <inertia-link href="/profiles">
+            <el-menu-item index="/profiles">
               <el-icon>
                 <font-awesome-icon icon="fa-solid fa-folder-open" />
               </el-icon>
@@ -93,7 +93,7 @@
       </el-row>
 
       <el-row class="page-container">
-        <el-col>
+        <el-col v-auto-animate="{ duration: 150 }">
           <slot />
         </el-col>
       </el-row>

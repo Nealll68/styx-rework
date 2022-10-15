@@ -48,6 +48,7 @@
     "@adonisjs/shield": "^7.1.0",
     "@adonisjs/view": "^6.2.0",
     "@eidellev/inertia-adonisjs": "^7.1.0",
+    "@formkit/auto-animate": "^1.0.0-beta.3",
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@fortawesome/vue-fontawesome": "^3.0.1",

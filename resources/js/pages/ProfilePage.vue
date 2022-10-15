@@ -1,5 +1,5 @@
 <template>
-  <el-col class="mb-8">
+  <el-col>
     <el-row justify="space-between">
       <el-col :span="4">
         <h1 class="text-4xl font-bold">Profiles</h1>
@@ -9,68 +9,20 @@
 
   <el-col
     v-if="profiles.length > 0"
-    class="mb-8"
+    class="profile-page__header-container sticky mb-8 z-50"
   >
     <el-card>
-      <el-row justify="space-between">
-        <el-col :span="12">
-          <el-dropdown>
-            <el-button type="primary">
-              RHS
-              <el-icon class="el-icon--right">
-                <font-awesome-icon icon="fa-solid fa-chevron-down" />
-              </el-icon>
-            </el-button>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>AMF</el-dropdown-item>
-                <el-dropdown-item>Vanilla</el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-
-          <el-button
-            class="ml-3"
-            type="info"
-            plain
-          >
-            <el-icon class="el-icon--left">
-              <font-awesome-icon icon="fa-solid fa-star" />
-            </el-icon>
-            Set as default
-          </el-button>
-
-          <el-button
-            type="danger"
-            plain
-          >
-            <el-icon class="el-icon--left">
-              <font-awesome-icon icon="fa-solid fa-trash" />
-            </el-icon>
-            Delete
-          </el-button>
-        </el-col>
-
-        <el-col
-          :span="3"
-          class="text-right"
-        >
-          <el-button
-            type="primary"
-            class="w-full"
-          >
-            <el-icon class="el-icon--left">
-              <font-awesome-icon icon="fa-solid fa-file-circle-plus" />
-            </el-icon>
-            Add profile
-          </el-button>
-        </el-col>
-      </el-row>
+      <profile-page-header
+        :profiles="profiles"
+        :profile="profile"
+        :disable-save-button="!profilePageForm.isDirty"
+        @saveProfile="saveProfile"
+      />
     </el-card>
   </el-col>
 
   <el-col>
-    <el-card>
+    <el-card class="profile-page__card">
       <el-empty
         v-if="profiles.length === 0"
         description="No profile"
@@ -90,20 +42,93 @@
         />
       </el-empty>
 
-      <div v-else>
-        <pre>{{ profiles }}</pre>
-
-        <pre>{{ profile }}</pre>
-      </div>
+      <profile-tabs
+        v-else
+        :profiles="profiles"
+        :profile="profile"
+        :form="profilePageForm"
+      />
     </el-card>
   </el-col>
 </template>
 
 <script lang="ts" setup>
+import { onMounted } from 'vue'
+import { useForm } from '@inertiajs/inertia-vue3'
+import { ElLoading, ElMessage } from 'element-plus'
 import type { ProfileInterface } from '@/interfaces'
 
-defineProps<{
+const props = defineProps<{
   profiles: ProfileInterface[]
   profile: ProfileInterface
 }>()
+
+const profilePageForm = useForm({
+  parameters: props.profile.parameter,
+  server: null,
+  difficulty: null,
+  performance: null,
+})
+
+const saveProfile = async () => {
+  const loading = ElLoading.service({
+    lock: true,
+    text: 'Saving...',
+  })
+
+  profilePageForm.put(`/profiles/${props.profile.id}`, {
+    onSuccess: (page) => {
+      ElMessage.success({
+        message: (page as InertiaPage).props.success,
+        duration: 5000,
+      })
+    },
+    onError: (errors) => {
+      ElMessage.error({
+        message: errors.message,
+        duration: 10000,
+        showClose: true,
+      })
+    },
+    onFinish: () => loading.close(),
+  })
+}
+
+onMounted(() => {
+  const el = document.querySelector('.profile-page__header-container')
+
+  if (el) {
+    const observer = new IntersectionObserver(
+      ([e]) =>
+        e.target.classList.toggle(
+          'profile-page__header-container--sticky',
+          e.intersectionRatio < 1
+        ),
+      { threshold: [1] }
+    )
+
+    observer.observe(el)
+  }
+})
 </script>
+
+<style lang="scss" scoped>
+:deep(.el-tabs__item) {
+  text-transform: uppercase;
+}
+
+:deep(.profile-page__card .el-card__body) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.profile-page__header-container {
+  top: -1px;
+  padding-top: 50px;
+}
+
+.profile-page__header-container--sticky .el-card {
+  box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px,
+    rgb(0 0 0 / 5%) 0px 4px 6px -2px !important;
+}
+</style>

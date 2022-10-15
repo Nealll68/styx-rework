@@ -12,6 +12,7 @@ specifiers:
   '@adonisjs/shield': ^7.1.0
   '@adonisjs/view': ^6.2.0
   '@eidellev/inertia-adonisjs': ^7.1.0
+  '@formkit/auto-animate': ^1.0.0-beta.3
   '@fortawesome/fontawesome-svg-core': ^6.2.0
   '@fortawesome/free-solid-svg-icons': ^6.2.0
   '@fortawesome/vue-fontawesome': ^3.0.1
@@ -68,6 +69,7 @@ dependencies:
   '@adonisjs/shield': 7.1.0_e8f002cb98ae67ed59daf799b2080d0d
   '@adonisjs/view': 6.2.0_@adonisjs+core@5.8.6
   '@eidellev/inertia-adonisjs': 7.1.0_@adonisjs+core@5.8.6
+  '@formkit/auto-animate': 1.0.0-beta.3
   '@fortawesome/fontawesome-svg-core': 6.2.0
   '@fortawesome/free-solid-svg-icons': 6.2.0
   '@fortawesome/vue-fontawesome': 3.0.1_e1fd52f1eac82276a69e2e58efb0a751
@@ -611,6 +613,10 @@ packages:
     resolution: {integrity: sha512-5X9WSvZ8/fjy3gDu8yx9HAA4KG1lazUN2P4/VnaXLxTO9Dz53HI1oYoh1OlhqFNlHgGDiwFX5WhFCc2ljbW3yA==}
     dependencies:
       '@floating-ui/core': 1.0.1
+    dev: false
+
+  /@formkit/auto-animate/1.0.0-beta.3:
+    resolution: {integrity: sha512-glsi+ytwQpxT/Ctr9GtcIfVr4dO6mJ04mQbNU8MFSdCdqMopHtyfU5Fib0+9lNFIeR0luY4/0NW95/2R5pKsag==}
     dev: false
 
   /@fortawesome/fontawesome-common-types/6.2.0:
