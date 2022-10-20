@@ -1,9 +1,7 @@
 <template>
   <el-col class="mb-8">
     <el-row justify="space-between">
-      <el-col :span="4">
-        <h1 class="text-4xl font-bold">Configuration</h1>
-      </el-col>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Configuration</h1>
     </el-row>
   </el-col>
 
@@ -14,7 +12,11 @@
         label-position="top"
       >
         <el-row :gutter="20">
-          <el-col :span="12">
+          <el-col
+            class="mb-5"
+            :md="12"
+            :xs="24"
+          >
             <h2 class="text-xl font-bold mb-5">Arma 3</h2>
 
             <el-form-item label="Arma 3 path">
@@ -38,7 +40,10 @@
             </span>
           </el-col>
 
-          <el-col :span="12">
+          <el-col
+            :md="12"
+            :xs="24"
+          >
             <h2 class="text-xl font-bold mb-5">Steam</h2>
 
             <el-form-item label="SteamCMD path">
@@ -51,7 +56,7 @@
               </span>
             </el-form-item>
 
-            <p class="leading-6">
+            <p class="text-sm leading-5 md:leading-6 md:text-base">
               You can specify a steam account that will manage the download of
               workshop. If you don't specify one, it will ask for an account at
               every download
@@ -101,9 +106,9 @@
           justify="center"
         >
           <el-button
-            class="w-2/4"
+            class="w-full sm:w-2/4"
+            type="primary"
             size="large"
-            plain
             @click="submit"
           >
             Save

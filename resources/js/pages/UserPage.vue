@@ -3,7 +3,12 @@
     class="mt-20"
     justify="center"
   >
-    <el-col :span="6">
+    <el-col
+      :xl="6"
+      :lg="8"
+      :md="10"
+      :sm="12"
+    >
       <el-card>
         <template #header>
           <h4 class="text-xl font-bold">Edit your account</h4>

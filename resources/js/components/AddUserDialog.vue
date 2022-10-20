@@ -1,7 +1,7 @@
 <template>
   <el-button
     type="primary"
-    size="large"
+    :size="lg ? 'default' : 'large'"
     @click="dialog = true"
   >
     <el-icon class="el-icon--left">
@@ -65,12 +65,16 @@
 
 <script lang="ts" setup>
 import { useForm } from '@inertiajs/inertia-vue3'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import type { UserInterface } from '@/interfaces/user'
 import type { FormInstance, FormRules } from 'element-plus'
 
 const props = defineProps<{
   users: UserInterface[]
 }>()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+const lg = breakpoints.smaller('lg')
 
 let dialog = $ref(false)
 const ruleFormRef = $ref<FormInstance>()

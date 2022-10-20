@@ -34,11 +34,24 @@ Route.group(() => {
   Route.get('/configuration', 'ConfigurationsController.index')
   Route.post('/configuration', 'ConfigurationsController.update')
 
+  Route.resource('profiles', 'ProfilesController').only([
+    'index',
+    'show',
+    'store',
+    'update',
+    'destroy',
+  ])
+  Route.put('profiles/default/:id', 'ProfilesController.updateDefault')
+
   Route.resource('users', 'UsersController')
     .only(['index', 'store', 'update', 'destroy'])
     .middleware({
       '*': ['admin'],
     })
+
+  Route.group(() => {
+    Route.get('/:profile/:file', 'FilesController.show')
+  }).prefix('/api')
 }).middleware('auth')
 
 // Route.group(() => {

@@ -15,9 +15,6 @@ export default class Parameter extends BaseModel {
   public profileId: number
 
   @column()
-  public port: number
-
-  @column()
   public mod: string
 
   @column()
@@ -27,20 +24,5 @@ export default class Parameter extends BaseModel {
   public customCfg: boolean
 
   @column()
-  public autoInit: boolean
-
-  @column()
-  public loadMissionToMemory: boolean
-
-  @column()
-  public noLogs: boolean
-
-  @column()
-  public enableHt: boolean
-
-  @column()
-  public hugePages: boolean
-
-  @column()
-  public filePatching: boolean
+  public startupParameters: string
 }

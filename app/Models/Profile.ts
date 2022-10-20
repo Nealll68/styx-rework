@@ -18,6 +18,8 @@ export default class Profile extends BaseModel {
   @column()
   public name: string
 
-  @column()
+  @column({
+    serialize: (value: number) => Boolean(value),
+  })
   public isDefault: boolean
 }
