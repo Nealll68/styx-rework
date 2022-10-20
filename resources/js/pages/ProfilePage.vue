@@ -8,6 +8,7 @@
           :profiles="profiles"
           button-class="lg:w-2/6"
           button-size="default"
+          hide-label
         />
       </div>
     </el-row>
@@ -32,6 +33,7 @@
       <el-empty
         v-if="profiles.length === 0"
         description="No profile"
+        class="text-sm leading-5 md:leading-6 md:text-base !px-5"
       >
         You don't have created a profile at this time!
         <br />
@@ -43,7 +45,7 @@
 
         <create-profile-dialog
           :profiles="profiles"
-          button-class="mt-5 w-2/4"
+          button-class="mt-5 w-full xs:w-2/4"
           button-size="large"
         />
       </el-empty>

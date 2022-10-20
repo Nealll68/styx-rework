@@ -5,10 +5,12 @@
     :size="buttonSize"
     @click="dialog = true"
   >
-    <el-icon class="sm:mr-1.5">
+    <el-icon :class="`${hideLabel ? 'sm:' : ''}mr-1.5`">
       <font-awesome-icon icon="fa-solid fa-file-circle-plus" />
     </el-icon>
-    <span class="hidden sm:block !ml-0">Add profile</span>
+    <span :class="['!ml-0', { 'hidden sm:block': hideLabel }]"
+      >Add profile</span
+    >
   </el-button>
 
   <el-dialog
@@ -60,13 +62,14 @@
 
 <script lang="ts" setup>
 import { useForm } from '@inertiajs/inertia-vue3'
-import type { ProfileInterface } from '@/interfaces'
 import { ElMessage, FormInstance, FormRules } from 'element-plus'
+import type { ProfileInterface } from '@/interfaces'
 
 const props = defineProps<{
   profiles: ProfileInterface[]
   buttonSize: string
   buttonClass: string
+  hideLabel?: boolean
 }>()
 
 let dialog = $ref(false)

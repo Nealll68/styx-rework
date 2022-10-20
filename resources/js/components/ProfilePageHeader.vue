@@ -75,6 +75,7 @@
         :profiles="profiles"
         button-class="lg:w-2/6"
         button-size="default"
+        hide-label
       />
     </div>
   </div>
