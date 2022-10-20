@@ -1,9 +1,15 @@
 <template>
   <el-col>
     <el-row justify="space-between">
-      <el-col :span="4">
-        <h1 class="text-4xl font-bold">Profiles</h1>
-      </el-col>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Profiles</h1>
+
+      <div class="block xs:hidden">
+        <create-profile-dialog
+          :profiles="profiles"
+          button-class="lg:w-2/6"
+          button-size="default"
+        />
+      </div>
     </el-row>
   </el-col>
 

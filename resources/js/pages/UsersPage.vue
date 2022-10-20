@@ -1,15 +1,9 @@
 <template>
   <el-col class="mb-8">
     <el-row justify="space-between">
-      <el-col :span="4">
-        <h1 class="text-4xl font-bold">Users</h1>
-      </el-col>
-      <el-col
-        :span="4"
-        class="text-right"
-      >
-        <add-user-dialog :users="users" />
-      </el-col>
+      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Users</h1>
+
+      <add-user-dialog :users="users" />
     </el-row>
   </el-col>
 

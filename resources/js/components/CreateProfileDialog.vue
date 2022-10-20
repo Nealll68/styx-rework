@@ -5,10 +5,10 @@
     :size="buttonSize"
     @click="dialog = true"
   >
-    <el-icon class="el-icon--left">
+    <el-icon class="sm:mr-1.5">
       <font-awesome-icon icon="fa-solid fa-file-circle-plus" />
     </el-icon>
-    Add profile
+    <span class="hidden sm:block !ml-0">Add profile</span>
   </el-button>
 
   <el-dialog

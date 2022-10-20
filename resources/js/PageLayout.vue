@@ -1,128 +1,118 @@
 <template>
-  <el-row>
-    <el-col :span="3">
-      <aside class="side-nav__container">
-        <div class="side-nav__logo">
-          <styx-logo
-            width="60px"
-            height="60px"
-          />
-        </div>
+  <main class="flex">
+    <nav
+      v-if="!lg"
+      class="side-nav"
+    >
+      <div class="side-nav__logo">
+        <styx-logo
+          :width="xl ? '45px' : '60px'"
+          :height="xl ? '45px' : '60px'"
+        />
+      </div>
 
-        <el-menu
-          class="side-nav"
-          :default-active="$page.url"
+      <div class="side-nav__content">
+        <nav-menu
+          class="side-nav__menu flex flex-col justify-between h-full"
+          :user="user"
+          :xl="xl"
+          :lg="lg"
+        />
+      </div>
+    </nav>
+
+    <article class="page w-full">
+      <header class="page__header z-10">
+        <el-button
+          v-if="lg"
+          class="mr-5"
+          link
+          size="large"
+          @click="mobileSideNav = true"
         >
-          <inertia-link href="/">
-            <el-menu-item index="/">
-              <el-icon>
-                <font-awesome-icon icon="fa-solid fa-house-fire" />
-              </el-icon>
-              <span>Dashboard</span>
-            </el-menu-item>
-          </inertia-link>
+          <el-icon>
+            <font-awesome-icon
+              icon="fa-solid fa-bars"
+              size="lg"
+            />
+          </el-icon>
+        </el-button>
 
-          <inertia-link href="/profiles">
-            <el-menu-item index="/profiles">
-              <el-icon>
-                <font-awesome-icon icon="fa-solid fa-folder-open" />
-              </el-icon>
-              <span>Profiles</span>
-            </el-menu-item>
-          </inertia-link>
+        <el-tag
+          v-if="user.admin"
+          type="danger"
+        >
+          Administrator
+        </el-tag>
+      </header>
 
-          <inertia-link href="/users">
-            <el-menu-item index="/users">
-              <el-icon>
-                <font-awesome-icon icon="fa-solid fa-users" />
-              </el-icon>
-              <span>Users</span>
-            </el-menu-item>
-          </inertia-link>
+      <section
+        class="page__content"
+        v-auto-animate
+      >
+        <slot />
+      </section>
+    </article>
+  </main>
 
-          <inertia-link href="/configuration">
-            <el-menu-item index="/configuration">
-              <el-icon>
-                <font-awesome-icon icon="fa-solid fa-gear" />
-              </el-icon>
-              <span>Configuration</span>
-            </el-menu-item>
-          </inertia-link>
-        </el-menu>
-
-        <div class="side-nav__bottom">
-          <inertia-link href="/user">
-            <el-button
-              class="side-nav__button"
-              size="large"
-              text
-            >
-              {{ user.username }}
-            </el-button>
-          </inertia-link>
-
-          <inertia-link href="/logout">
-            <el-button
-              class="side-nav__button"
-              type="danger"
-              size="large"
-              text
-            >
-              <el-icon class="el-icon--left">
-                <font-awesome-icon
-                  icon="fa-solid fa-arrow-right-from-bracket"
-                />
-              </el-icon>
-              Logout
-            </el-button>
-          </inertia-link>
-        </div>
-      </aside>
-    </el-col>
-
-    <el-col :span="21">
-      <el-row class="page-header__container">
-        <header class="page-header z-10">
-          <el-tag
-            v-if="user.admin"
-            type="danger"
-          >
-            Administrator
-          </el-tag>
-        </header>
-      </el-row>
-
-      <el-row class="page-container">
-        <el-col v-auto-animate="{ duration: 150 }">
-          <slot />
-        </el-col>
-      </el-row>
-    </el-col>
-  </el-row>
+  <el-drawer
+    v-if="lg"
+    v-model="mobileSideNav"
+    :with-header="false"
+    direction="ltr"
+    size="85%"
+    custom-class="mobile-side-nav"
+  >
+    <nav-menu
+      class="flex flex-col justify-between h-full"
+      :user="user"
+      :xl="xl"
+      :lg="lg"
+      style="border: none"
+    />
+  </el-drawer>
 </template>
 
 <script lang="ts" setup>
-import { Link as InertiaLink } from '@inertiajs/inertia-vue3'
+import { Inertia } from '@inertiajs/inertia'
+import { breakpointsTailwind, useBreakpoints } from '@vueuse/core'
 import type { UserInterface } from './interfaces/user'
 
 defineProps<{
   user: UserInterface
 }>()
+
+const breakpoints = useBreakpoints(breakpointsTailwind)
+
+const xl = breakpoints.smaller('xl')
+const lg = breakpoints.smaller('lg')
+
+let mobileSideNav = $ref(false)
+
+const sideNavWidth = $computed(() => {
+  if (lg.value) return '0px'
+  return xl.value ? '64px' : '235px'
+})
+
+Inertia.on('navigate', () => {
+  mobileSideNav = false
+})
 </script>
 
 <style lang="scss" scoped>
 $bgColor: #1d1e1f;
 
 .side-nav {
-  border: none;
-}
-
-.side-nav__container {
   position: fixed;
-  width: 12.5%;
+  width: v-bind(sideNavWidth);
   height: 100%;
   max-height: 100vh;
   background-color: $bgColor;
+  transition: all 0.3s ease;
+}
+
+.side-nav .el-menu {
+  border: none;
 }
 
 .side-nav__logo {
@@ -134,23 +124,20 @@ $bgColor: #1d1e1f;
   }
 }
 
-.side-nav__bottom {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  padding: 0 10px;
+.side-nav__content {
+  height: calc(100% - 91px);
 }
 
-.side-nav__button {
-  width: 100%;
-  margin-top: 10px;
-
-  &:last-child {
-    margin-left: 0;
-  }
+.side-nav__logout {
+  color: var(--el-color-error);
 }
 
-.page-header {
+.page {
+  padding-left: v-bind(sideNavWidth);
+  transition: all 0.3s ease;
+}
+
+.page__header {
   position: fixed;
 
   display: flex;
@@ -166,7 +153,7 @@ $bgColor: #1d1e1f;
   backdrop-filter: saturate(50%) blur(4px);
 }
 
-.page-container {
+.page__content {
   padding: 70px 20px 0 20px;
 }
 </style>

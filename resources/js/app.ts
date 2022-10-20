@@ -28,6 +28,7 @@ import {
   faCheck,
   faQuestion,
   faFloppyDisk,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons'
 
 library.add(
@@ -45,7 +46,8 @@ library.add(
   faFileCirclePlus,
   faCheck,
   faQuestion,
-  faFloppyDisk
+  faFloppyDisk,
+  faBars
 )
 
 InertiaProgress.init({

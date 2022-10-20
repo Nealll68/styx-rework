@@ -18,11 +18,24 @@ body {
   margin: 0;
 }
 
-.page-container .el-card {
+.page__content .el-card {
   border: none;
-  box-shadow: var(--el-box-shadow-lighter) !important;
+  // box-shadow: var(--el-box-shadow-lighter) !important;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px !important;
 }
 
-.page-container .el-dialog .el-dialog__header {
+.page__content .el-dialog .el-dialog__header {
   text-align: left;
+}
+
+.mobile-side-nav {
+  max-width: 235px;
+}
+
+.page__content .el-card__body {
+  padding: 10px;
+
+  @media (min-width: 1024px) {
+    padding: var(--el-card-padding);
+  }
 }

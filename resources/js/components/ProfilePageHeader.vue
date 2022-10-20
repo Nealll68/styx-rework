@@ -1,7 +1,7 @@
 <template>
-  <el-row justify="space-between">
-    <el-col :span="8">
-      <el-dropdown>
+  <div class="flex space-between">
+    <div>
+      <el-dropdown class="mr-3">
         <el-button type="primary">
           {{ profile.name }}
           <el-icon class="el-icon--right">
@@ -21,71 +21,63 @@
         </template>
       </el-dropdown>
 
-      <el-button
-        class="ml-3"
-        type="info"
-        plain
-        :disabled="profile.is_default"
-        :loading="defaultButtonLoading"
-        @click="setProfileDefault"
-      >
-        <template v-if="profile.is_default">
-          <el-icon class="el-icon--left">
-            <font-awesome-icon icon="fa-solid fa-check" />
+      <el-button-group>
+        <el-button
+          type="success"
+          plain
+          :disabled="disableSaveButton"
+          @click="$emit('saveProfile')"
+        >
+          <el-icon class="sm:mr-1.5">
+            <font-awesome-icon icon="fa-solid fa-floppy-disk" />
           </el-icon>
-          Default
-        </template>
+          <span class="hidden sm:block !ml-0">Save profile</span>
+        </el-button>
 
-        <template v-else>
-          <el-icon class="el-icon--left">
-            <font-awesome-icon icon="fa-solid fa-star" />
+        <el-button
+          type="warning"
+          plain
+          :disabled="profile.is_default"
+          :loading="defaultButtonLoading"
+          @click="setProfileDefault"
+        >
+          <template v-if="profile.is_default">
+            <el-icon class="sm:mr-1.5">
+              <font-awesome-icon icon="fa-solid fa-check" />
+            </el-icon>
+            <span class="hidden sm:block !ml-0">Default</span>
+          </template>
+
+          <template v-else>
+            <el-icon class="sm:mr-1.5">
+              <font-awesome-icon icon="fa-solid fa-star" />
+            </el-icon>
+            <span class="hidden sm:block !ml-0">Set as default</span>
+          </template>
+        </el-button>
+
+        <el-button
+          type="danger"
+          plain
+          :loading="deleteButtonLoading"
+          @click="deleteProfile"
+        >
+          <el-icon class="sm:mr-1.5">
+            <font-awesome-icon icon="fa-solid fa-trash" />
           </el-icon>
-          Set as default
-        </template>
-      </el-button>
+          <span class="hidden sm:block !ml-0">Delete</span>
+        </el-button>
+      </el-button-group>
+    </div>
 
-      <el-button
-        type="danger"
-        plain
-        :loading="deleteButtonLoading"
-        @click="deleteProfile"
-      >
-        <el-icon class="el-icon--left">
-          <font-awesome-icon icon="fa-solid fa-trash" />
-        </el-icon>
-        Delete
-      </el-button>
-    </el-col>
-
-    <el-col
-      :span="8"
-      class="text-center"
-    >
-      <el-button
-        class="w-3/4"
-        type="success"
-        plain
-        :disabled="disableSaveButton"
-        @click="$emit('saveProfile')"
-      >
-        <el-icon class="el-icon--left">
-          <font-awesome-icon icon="fa-solid fa-floppy-disk" />
-        </el-icon>
-        Save profile
-      </el-button>
-    </el-col>
-
-    <el-col
-      :span="8"
-      class="text-right"
-    >
+    <div class="hidden xs:block grow text-right">
       <create-profile-dialog
         :profiles="profiles"
-        button-class="w-2/4"
+        button-class="lg:w-2/6"
         button-size="default"
       />
-    </el-col>
-  </el-row>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
