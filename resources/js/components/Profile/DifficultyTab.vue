@@ -33,7 +33,7 @@
 
     <el-input
       v-if="!skeleton && !error"
-      v-model="modelValue"
+      :model-value="modelValue"
       class="font-mono"
       type="textarea"
       spellcheck="false"

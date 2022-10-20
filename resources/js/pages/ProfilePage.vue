@@ -54,17 +54,17 @@
         v-else
         :profiles="profiles"
         :profile="profile"
-        :form="profilePageForm"
       />
     </el-card>
   </el-col>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, provide } from 'vue'
 import { useForm } from '@inertiajs/inertia-vue3'
 import { ElLoading, ElMessage } from 'element-plus'
 import type { ProfileInterface } from '@/interfaces'
+import { ProfilePageFormKey } from '@/injectKey'
 
 const props = defineProps<{
   profiles: ProfileInterface[]
@@ -77,6 +77,8 @@ const profilePageForm = useForm({
   difficulty: null,
   performance: null,
 })
+
+provide(ProfilePageFormKey, profilePageForm)
 
 const saveProfile = async () => {
   const loading = ElLoading.service({

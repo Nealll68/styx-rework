@@ -8,9 +8,7 @@
     <el-icon :class="`${hideLabel ? 'sm:' : ''}mr-1.5`">
       <font-awesome-icon icon="fa-solid fa-file-circle-plus" />
     </el-icon>
-    <span :class="['!ml-0', { 'hidden sm:block': hideLabel }]"
-      >Add profile</span
-    >
+    <span :class="['!ml-0', { 'hidden sm:block': hideLabel }]">Add profile</span>
   </el-button>
 
   <el-dialog

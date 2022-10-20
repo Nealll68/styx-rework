@@ -47,8 +47,8 @@
       </header>
 
       <section
-        class="page__content"
         v-auto-animate
+        class="page__content"
       >
         <slot />
       </section>

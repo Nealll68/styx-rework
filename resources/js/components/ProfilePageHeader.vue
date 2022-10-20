@@ -11,11 +11,11 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item
-              v-for="profile in dropdownProfiles"
-              :key="profile.id"
-              @click="Inertia.get(`/profiles/${profile.id}`)"
+              v-for="dropdownProfile in dropdownProfiles"
+              :key="dropdownProfile.id"
+              @click="Inertia.get(`/profiles/${dropdownProfile.id}`)"
             >
-              {{ profile.name }}
+              {{ dropdownProfile.name }}
             </el-dropdown-item>
           </el-dropdown-menu>
         </template>

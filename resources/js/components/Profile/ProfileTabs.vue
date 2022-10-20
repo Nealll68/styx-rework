@@ -1,5 +1,6 @@
 <template>
   <el-tabs
+    v-if="form"
     v-model="activeTabs"
     stretch
   >
@@ -7,7 +8,7 @@
       label="Parameters"
       name="parameters"
     >
-      <parameters-tab :parameters="form.parameters" />
+      <parameters-tab />
     </el-tab-pane>
     <el-tab-pane
       label="Configuration"
@@ -43,19 +44,16 @@
 </template>
 
 <script lang="ts" setup>
-import type { ParameterInterface, ProfileInterface } from '@/interfaces'
-import type { InertiaForm } from '@inertiajs/inertia-vue3'
+import { inject } from 'vue'
+import type { ProfileInterface } from '@/interfaces'
+import { ProfilePageFormKey } from '@/injectKey'
 
 defineProps<{
   profiles: ProfileInterface[]
   profile: ProfileInterface
-  form: InertiaForm<{
-    parameters: ParameterInterface
-    server: null
-    difficulty: null
-    performance: null
-  }>
 }>()
+
+const form = inject(ProfilePageFormKey)
 
 const activeTabs = $ref('parameters')
 </script>

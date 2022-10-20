@@ -79,7 +79,9 @@ class ArmaProfile {
     file: string,
     armaBasePath: string | undefined
   ): Promise<String> {
-    if (!name || !armaBasePath) return ''
+    if (!name || !armaBasePath) {
+      return ''
+    }
 
     if (file === 'server' || file === 'basic') {
       return await readFile(
@@ -113,7 +115,9 @@ class ArmaProfile {
     content: string,
     armaBasePath: string | undefined
   ): Promise<void> {
-    if (!name || !armaBasePath) return
+    if (!name || !armaBasePath) {
+      return
+    }
 
     if (file === 'server' || file === 'basic') {
       await writeFile(
@@ -145,7 +149,9 @@ class ArmaProfile {
     name: string,
     armaBasePath: string | undefined
   ): Promise<void> {
-    if (!armaBasePath) return
+    if (!armaBasePath) {
+      return
+    }
 
     await rm(join(this.profileBasePath(armaBasePath), name), {
       recursive: true,

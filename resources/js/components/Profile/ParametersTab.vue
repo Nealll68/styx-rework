@@ -1,8 +1,11 @@
 <template>
-  <div class="px-5">
+  <div
+    v-if="form"
+    class="px-5"
+  >
     <span>Startup parameters</span>
     <el-input
-      v-model="parameters.startup_parameters"
+      v-model="form.parameters.startup_parameters"
       size="large"
     />
     <span class="text-slate-300 text-xs">
@@ -24,9 +27,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { ParameterInterface } from '@/interfaces'
+import { ProfilePageFormKey } from '@/injectKey'
+import { inject } from 'vue'
 
-defineProps<{
-  parameters: ParameterInterface
-}>()
+const form = inject(ProfilePageFormKey)
 </script>

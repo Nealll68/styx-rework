@@ -15,5 +15,7 @@ module.exports = {
   rules: {
     'no-undef': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/v-on-event-hyphenation': 'off',
+    'vue/html-self-closing': 'off',
   },
 }
